@@ -8,5 +8,6 @@ Doctoral course project for *Research Methods and Scientific Integrity in AI and
 ## Repository Structure
 
 - `01_paradigm/` - Paradigm justification statement
+- `02_method/` - Method-fit matrix
 
 This repository will be expanded session by session as the course progresses.
