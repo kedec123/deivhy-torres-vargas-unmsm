@@ -1,2 +1,7 @@
 [core]
     no_scm = false
+    remote = storage
+
+['remote "storage"']
+    url = gdrive://root/unmsm-research-methods-deivhy/05_pipeline
+    gdrive_acknowledge_abuse = true

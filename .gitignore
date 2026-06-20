@@ -17,6 +17,7 @@ Thumbs.db
 
 # Local secrets
 .env
+.dvc/config.local
 
 # DVC local cache
 .dvc/cache/
