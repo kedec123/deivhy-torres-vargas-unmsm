@@ -71,6 +71,8 @@ uv venv --python 3.12 .venv
 uv pip install --python .venv -r requirements.txt
 ```
 
+If Google Colab shows a warning about preinstalled packages, restart the runtime once after installation and then run the notebook again from the top.
+
 3. Recover or regenerate the dataset
 
 If the dataset is already available locally, you can keep it as is. If you want to regenerate the synthetic file from scratch:
