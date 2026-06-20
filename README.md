@@ -9,5 +9,6 @@ Doctoral course project for *Research Methods and Scientific Integrity in AI and
 
 - `01_paradigm/` - Paradigm justification statement
 - `02_method/` - Method-fit matrix
+- `03_protocol/` - Research protocol draft
 
 This repository will be expanded session by session as the course progresses.
