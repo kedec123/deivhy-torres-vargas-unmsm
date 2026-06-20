@@ -1,0 +1,5 @@
+outs:
+- md5: c68fd4f91103c77e5b22c8df8d5045b2
+  size: 42058
+  hash: md5
+  path: anemia_peru_synthetic.csv

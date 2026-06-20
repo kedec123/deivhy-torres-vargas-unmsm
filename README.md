@@ -11,5 +11,6 @@ Doctoral course project for *Research Methods and Scientific Integrity in AI and
 - `02_method/` - Method-fit matrix
 - `03_protocol/` - Research protocol draft
 - `04_literature/` - Systematic review, PRISMA flow, and gap analysis
+- `05_pipeline/` - Reproducible baseline pipeline with Git, DVC, MLflow, and Docker
 
 This repository will be expanded session by session as the course progresses.
