@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -9,14 +10,19 @@ if MLFLOW_AVAILABLE:
 
 
 SEEDS = [13, 21, 42, 87, 100]
-OUTPUT_PATH = Path(__file__).resolve().parents[1] / "docs" / "experiment_results.csv"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+OUTPUT_PATH = PROJECT_ROOT / "docs" / "experiment_results.csv"
+TRACKING_PATH = PROJECT_ROOT / "mlruns"
+LOG_MODELS = os.getenv("MLFLOW_LOG_MODELS", "0") == "1"
 
 
 def run():
     all_rows = []
 
     if MLFLOW_AVAILABLE:
+        mlflow.set_tracking_uri(TRACKING_PATH.resolve().as_uri())
         mlflow.set_experiment("child-anemia-peru-baseline")
+        print(f"MLflow tracking URI: {TRACKING_PATH}")
 
     for seed in SEEDS:
         fitted, results = main(seed=seed, test_size=0.25)
@@ -32,7 +38,9 @@ def run():
                     mlflow.log_param("test_size", 0.25)
                     for metric_name in ["auc_roc", "pr_auc", "accuracy", "f1", "recall"]:
                         mlflow.log_metric(metric_name, row[metric_name])
-                    mlflow.sklearn.log_model(fitted[row["model"]], "model")
+                    mlflow.set_tag("model_artifact_logging", "enabled" if LOG_MODELS else "disabled")
+                    if LOG_MODELS:
+                        mlflow.sklearn.log_model(fitted[row["model"]], "model")
 
     df = pd.DataFrame(all_rows)
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
