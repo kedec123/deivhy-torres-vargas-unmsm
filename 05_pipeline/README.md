@@ -5,110 +5,94 @@ Reproducible baseline pipeline for the child anemia project in Peru.
 **Author:** Deivhy Torres  
 **Course:** Research Methods and Scientific Integrity in AI and Advanced Technologies - UNMSM
 
-## What this is
+## Purpose of this folder
 
-This folder provides a small, reproducible analytical baseline for the doctoral project. It does **not** use real ENDES microdata yet. Instead, it uses a **synthetic ENDES-like dataset** designed to resemble plausible child, maternal, household, and territorial variables related to anemia in Peru.
+This folder is the Session 5 technical artifact. It demonstrates the reproducibility stack required by the course using a small **synthetic ENDES-like dataset** rather than real ENDES microdata.
 
-The goal is to validate the reproducibility workflow itself:
+Its job is modest but important: show that the project can track data, record experiments, document the environment, and be rerun in a clean, explicit workflow.
 
-- version control with Git
-- data snapshot logic with DVC
-- experiment tracking with MLflow
-- environment portability with Docker
+## What is included
 
-## Important note
-
-The file `data/anemia_peru_synthetic.csv` is fully synthetic and exists only for methodological demonstration. It must **never** be interpreted as real national evidence about anemia prevalence or policy impact.
-
-## Project structure
-
-- `data/create_dataset.py` - generates the synthetic ENDES-like dataset
-- `data/anemia_peru_synthetic.csv` - current synthetic snapshot
-- `data/anemia_peru_synthetic.csv.dvc` - DVC pointer for the dataset snapshot
-- `src/train.py` - trains baseline models and reports metrics
-- `src/run_experiments.py` - runs the pipeline across multiple random seeds
+- `data/create_dataset.py` - creates the synthetic dataset
+- `data/anemia_peru_synthetic.csv.dvc` - DVC pointer for the tracked dataset
+- `src/train.py` - runs one baseline experiment
+- `src/run_experiments.py` - runs the multi-seed experiment set and logs results
 - `docs/experiment_results.csv` - saved experiment summary
-- `requirements.txt` - Python dependencies
-- `Dockerfile` - portable container environment
+- `notebook.ipynb` - lightweight notebook entry point for inspection and class demonstration
+- `mlruns/` - MLflow tracking output already generated for the current baseline
+- `Dockerfile` - environment description for container-based reproduction
 
-## Reproduce the baseline
+## Important limitation
 
-Recommended on Windows: use Python 3.12 for the smoothest MLflow setup.
+`data/anemia_peru_synthetic.csv` is a synthetic teaching dataset. It is useful for reproducibility practice only. It must not be treated as evidence about real anemia prevalence in Peru.
 
-1. Create the virtual environment
+## Local reproduction workflow
+
+Recommended on Windows: use Python 3.12.
+
+1. Create the environment
+
 ```bash
 uv venv --python 3.12 .venv
 ```
 
 2. Install dependencies
+
 ```bash
 uv pip install --python .venv -r requirements.txt
 ```
 
-3. Regenerate the synthetic dataset if needed
+3. Recover or regenerate the dataset
+
+If the dataset is already available locally, you can keep it as is. If you want to regenerate the synthetic file from scratch:
+
 ```bash
 .\.venv\Scripts\python data/create_dataset.py
 ```
 
-4. Run one baseline experiment
+If you prefer to pull the tracked artifact through DVC after configuring authentication:
+
+```bash
+.\.venv\Scripts\dvc pull
+```
+
+4. Run one baseline model training
+
 ```bash
 .\.venv\Scripts\python src/train.py --seed 42
 ```
 
-5. Run all experiments and create `mlruns/`
+5. Run the full experiment set and generate MLflow runs
+
 ```bash
 .\.venv\Scripts\python src/run_experiments.py
 ```
 
-## Expected behavior
+6. Open the MLflow UI
 
-The script trains:
-
-- a logistic regression baseline
-- a random forest comparison model
-
-Both models predict the probability of anemia from synthetic variables such as:
-
-- child age in months
-- rural residence
-- household wealth
-- maternal education
-- recent iron supplementation
-- recent diarrhea
-- safe water access
-- region and altitude
-
-## Current experiment summary
-
-The current synthetic baseline was run across 5 seeds (`13, 21, 42, 87, 100`) and the results were saved to `docs/experiment_results.csv`.
-
-Average performance across seeds:
-
-| Model | AUC-ROC | PR-AUC | Accuracy | F1 | Recall |
-|---|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.6484 | 0.6017 | 0.6080 | 0.5634 | 0.5383 |
-| Random Forest | 0.6251 | 0.5850 | 0.5913 | 0.5509 | 0.5340 |
-
-## MLflow
-
-If `mlflow` is installed, `src/run_experiments.py` logs each run automatically inside `05_pipeline/mlruns/`.
-
-By default, the script logs parameters and metrics. Model artifact logging is disabled by default to keep the classroom setup lightweight on Windows. If you want model files too, run:
-```bash
-$env:MLFLOW_LOG_MODELS="1"
-.\.venv\Scripts\python src/run_experiments.py
-```
-
-To inspect runs:
 ```bash
 .\.venv\Scripts\mlflow ui --backend-store-uri .\mlruns
 ```
 
-Then open:
-`http://127.0.0.1:5000`
+Then open `http://127.0.0.1:5000`.
 
-If MLflow is not installed, the experiments still run and save a CSV summary in `docs/experiment_results.csv`.
+## DVC configuration
 
-## DVC note
+This project is prepared to use **Google Drive** as the DVC remote target. The current remote points to a personal Google Drive path so the owner can authenticate and push or pull data from the same account.
 
-This repository includes a small synthetic CSV for transparency and ease of classroom review. In a real research workflow, cleaned ENDES extracts or derived analytical tables should be stored through a proper DVC remote, not committed directly to Git.
+Before final course submission to an external reviewer, this should be upgraded to a **shared Google Drive folder ID**, because that is more appropriate for multi-user access than a personal `root` path.
+
+If authentication is needed for the first time, DVC will prompt for browser-based authorization. Credentials should stay local and must not be committed.
+
+## Current baseline
+
+The current baseline uses two simple models:
+
+- logistic regression
+- random forest
+
+The current saved run summary covers 5 seeds (`13, 21, 42, 87, 100`) and is stored in `docs/experiment_results.csv`.
+
+## Docker note
+
+The Dockerfile is included to meet the course reproducibility requirements and to document the intended environment. In this machine, Docker could not be validated locally because Docker is not installed, so container execution remains a documented path rather than a verified one.
