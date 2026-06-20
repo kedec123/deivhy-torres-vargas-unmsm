@@ -11,6 +11,14 @@ This folder is the Session 5 technical artifact. It demonstrates the reproducibi
 
 Its job is modest but important: show that the project can track data, record experiments, document the environment, and be rerun in a clean, explicit workflow.
 
+## Recommended environment
+
+The recommended environment for this artifact is **Google Colab**, because that is the classroom workflow used in the course. Local execution is still possible and documented below, but Colab is the main presentation path for this repository.
+
+Open the notebook directly in Colab:
+
+[Open in Colab](https://colab.research.google.com/github/kedec123/deivhy-torres-vargas-unmsm/blob/main/05_pipeline/notebook.ipynb)
+
 ## What is included
 
 - `data/create_dataset.py` - creates the synthetic dataset
@@ -18,13 +26,34 @@ Its job is modest but important: show that the project can track data, record ex
 - `src/train.py` - runs one baseline experiment
 - `src/run_experiments.py` - runs the multi-seed experiment set and logs results
 - `docs/experiment_results.csv` - saved experiment summary
-- `notebook.ipynb` - lightweight notebook entry point for inspection and class demonstration
+- `notebook.ipynb` - Colab-friendly notebook for setup, inspection, and demonstration
 - `mlruns/` - MLflow tracking output already generated for the current baseline
 - `Dockerfile` - environment description for container-based reproduction
 
 ## Important limitation
 
 `data/anemia_peru_synthetic.csv` is a synthetic teaching dataset. It is useful for reproducibility practice only. It must not be treated as evidence about real anemia prevalence in Peru.
+
+## Google Colab workflow
+
+This is the simplest way to show the Session 5 artifact in class or in a review:
+
+1. Open `05_pipeline/notebook.ipynb` from GitHub or by using the Colab link above.
+2. Run the setup cells that clone the repository and install dependencies.
+3. Move into the `05_pipeline/` folder inside the Colab runtime.
+4. Run the notebook cells that inspect the synthetic dataset and saved experiment results.
+5. If needed, run the training script or the multi-seed experiment script from within the notebook.
+
+If you want visible evidence for the deliverable, Colab execution can be shown through:
+
+- saved notebook outputs,
+- `docs/experiment_results.csv`,
+- the `mlruns/` folder already committed in the repository,
+- optional screenshots from the MLflow UI.
+
+## How to add a notebook to this folder
+
+If you create or update a notebook in Colab, use **File -> Save a copy in GitHub** and select this repository plus the path `05_pipeline/notebook.ipynb`. If GitHub save is not available, download the notebook as `.ipynb` and place it in this same folder before committing and pushing.
 
 ## Local reproduction workflow
 

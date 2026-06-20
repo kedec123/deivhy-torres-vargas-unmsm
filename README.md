@@ -29,6 +29,8 @@ If you want the technical artifact, go directly to `05_pipeline/README.md`. The 
 
 The pipeline is centered on a small synthetic ENDES-like dataset created only for reproducibility practice. It does **not** claim to be the final analytical dataset for the research project. The current artifact demonstrates versioning, experiment tracking, and environment documentation, while the substantive doctoral work remains focused on the protocol and literature components.
 
+The main teaching environment for the technical artifact is now **Google Colab**, which matches the way the work was developed in class. Local execution remains documented as an alternative path, but Colab is the easiest route to show how the notebook and results were actually produced.
+
 Docker instructions are included because they are required by the course brief. However, Docker was **not** validated locally in the present environment because Docker is not installed on this machine. That limitation is documented rather than hidden.
 
 ## What is still pending for the final course brief
