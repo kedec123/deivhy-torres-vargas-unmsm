@@ -1,0 +1,14 @@
+artifact_uri: file:///D:/CODEX/UNMSM/repo-github-real/05_pipeline/mlruns/244062609416711898/3f7a49b285f94e7d9efda4507b8f893d/artifacts
+end_time: 1781929950914
+entry_point_name: ''
+experiment_id: '244062609416711898'
+lifecycle_stage: active
+run_id: 3f7a49b285f94e7d9efda4507b8f893d
+run_name: logreg-seed-42
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781929950801
+status: 3
+tags: []
+user_id: deivh

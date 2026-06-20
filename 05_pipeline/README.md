@@ -33,24 +33,31 @@ The file `data/anemia_peru_synthetic.csv` is fully synthetic and exists only for
 
 ## Reproduce the baseline
 
-1. Install dependencies
+Recommended on Windows: use Python 3.12 for the smoothest MLflow setup.
+
+1. Create the virtual environment
 ```bash
-pip install -r requirements.txt
+uv venv --python 3.12 .venv
 ```
 
-2. Regenerate the synthetic dataset if needed
+2. Install dependencies
 ```bash
-python data/create_dataset.py
+uv pip install --python .venv -r requirements.txt
 ```
 
-3. Run one baseline experiment
+3. Regenerate the synthetic dataset if needed
 ```bash
-python src/train.py --seed 42
+.\.venv\Scripts\python data/create_dataset.py
 ```
 
-4. Run all experiments
+4. Run one baseline experiment
 ```bash
-python src/run_experiments.py
+.\.venv\Scripts\python src/train.py --seed 42
+```
+
+5. Run all experiments and create `mlruns/`
+```bash
+.\.venv\Scripts\python src/run_experiments.py
 ```
 
 ## Expected behavior
@@ -84,11 +91,17 @@ Average performance across seeds:
 
 ## MLflow
 
-If `mlflow` is installed, `src/run_experiments.py` logs each run automatically.
+If `mlflow` is installed, `src/run_experiments.py` logs each run automatically inside `05_pipeline/mlruns/`.
+
+By default, the script logs parameters and metrics. Model artifact logging is disabled by default to keep the classroom setup lightweight on Windows. If you want model files too, run:
+```bash
+$env:MLFLOW_LOG_MODELS="1"
+.\.venv\Scripts\python src/run_experiments.py
+```
 
 To inspect runs:
 ```bash
-mlflow ui
+.\.venv\Scripts\mlflow ui --backend-store-uri .\mlruns
 ```
 
 Then open:

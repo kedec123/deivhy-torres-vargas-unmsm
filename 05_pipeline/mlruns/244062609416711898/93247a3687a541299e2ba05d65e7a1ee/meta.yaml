@@ -1,0 +1,14 @@
+artifact_uri: file:///D:/CODEX/UNMSM/repo-github-real/05_pipeline/mlruns/244062609416711898/93247a3687a541299e2ba05d65e7a1ee/artifacts
+end_time: 1781929952178
+entry_point_name: ''
+experiment_id: '244062609416711898'
+lifecycle_stage: active
+run_id: 93247a3687a541299e2ba05d65e7a1ee
+run_name: random_forest-seed-87
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781929952058
+status: 3
+tags: []
+user_id: deivh
