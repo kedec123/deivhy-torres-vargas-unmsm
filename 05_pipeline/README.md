@@ -44,6 +44,8 @@ This is the simplest way to show the Session 5 artifact in class or in a review:
 4. Run the notebook cells that inspect the synthetic dataset and saved experiment results.
 5. If needed, run the training script or the multi-seed experiment script from within the notebook.
 
+If Colab shows a warning about preinstalled packages after installation, restart the runtime once and run the notebook again from the top.
+
 If you want visible evidence for the deliverable, Colab execution can be shown through:
 
 - saved notebook outputs,
@@ -70,8 +72,6 @@ uv venv --python 3.12 .venv
 ```bash
 uv pip install --python .venv -r requirements.txt
 ```
-
-If Google Colab shows a warning about preinstalled packages, restart the runtime once after installation and then run the notebook again from the top.
 
 3. Recover or regenerate the dataset
 

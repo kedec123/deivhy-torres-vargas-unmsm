@@ -25,6 +25,23 @@ If you want the research logic, start with `01_paradigm/` and move in order to `
 
 If you want the technical artifact, go directly to `05_pipeline/README.md`. The reproducibility stack is intentionally self-contained there, even though the final course brief also shows a wider repository layout for later sessions.
 
+## Quick access
+
+- Research deliverables: `01_paradigm/` to `04_literature/`
+- Technical artifact: `05_pipeline/`
+- Colab notebook: `05_pipeline/notebook.ipynb`
+- Saved experiment summary: `05_pipeline/docs/experiment_results.csv`
+
+## How to reproduce the current technical artifact
+
+The easiest path is Google Colab:
+
+1. Open `05_pipeline/notebook.ipynb` from GitHub or through the Colab link inside `05_pipeline/README.md`.
+2. Run the notebook from top to bottom.
+3. Use the executed notebook, the saved CSV summary, and the committed `mlruns/` folder as technical evidence for Session 5.
+
+If you prefer local execution, the exact steps are documented in `05_pipeline/README.md`.
+
 ## Technical status
 
 The pipeline is centered on a small synthetic ENDES-like dataset created only for reproducibility practice. It does **not** claim to be the final analytical dataset for the research project. The current artifact demonstrates versioning, experiment tracking, and environment documentation, while the substantive doctoral work remains focused on the protocol and literature components.
@@ -39,6 +56,16 @@ Docker instructions are included because they are required by the course brief. 
 - a final DVC remote setup tested from a fresh external clone
 - later protocol versions (`v1.0` and `v2.0`)
 - ethics, data management, bias, integrity, and reflective writing materials
+
+## Current completion status
+
+For the current sessions 1-5 scope, the repository already includes:
+
+- paradigm justification
+- method-fit matrix
+- protocol outline v0.1
+- mini systematic review with PRISMA diagram and gap analysis
+- reproducible baseline pipeline with notebook, DVC, MLflow outputs, and experiment summary
 
 ## Integrity note
 
