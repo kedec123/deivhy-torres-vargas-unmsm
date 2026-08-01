@@ -4,7 +4,7 @@ Use this checklist from a clean clone before presenting the repository as fully 
 
 - [ ] Clone the repository and switch to the intended commit or release tag.
 - [ ] Create a Python 3.11 environment and install the pinned root requirements.
-- [ ] Configure the local-only Google Drive service-account settings described in `data/DVC_ACCESS.md`.
+- [ ] Configure the local-only Google Drive service-account settings described in `05_pipeline/README.md`.
 - [ ] Run `dvc pull` and confirm that `data/raw/` and the processed CSV are restored.
 - [ ] Run `dvc repro` and compare the regenerated descriptive and experiment outputs with the committed summaries.
 - [ ] Open MLflow with `mlflow ui --backend-store-uri .\\mlruns` and inspect the ten fixed-seed runs.

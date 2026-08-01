@@ -1,27 +1,21 @@
-# Virtual environments
+# Local Python environments and generated caches
 .venv/
 venv/
 env/
-
-# Python cache
 __pycache__/
-*.pyc
-*.pyo
-
-# Jupyter
+*.py[cod]
 .ipynb_checkpoints/
+.pytest_cache/
 
-# OS files
+# Operating-system files and local credentials
 .DS_Store
 Thumbs.db
-
-# Local secrets
 .env
-.dvc/config.local
+/.dvc/
 
-# DVC local cache
-.dvc/cache/
-/mlruns
-
-# Regenerated row-level diagnostic output; never publish in Git.
+# Recreated data and experiment stores
+/data/
+/mlruns/
+/05_pipeline/.venv/
+/05_pipeline/data/raw/
 /05_pipeline/docs/latest_test_predictions.csv

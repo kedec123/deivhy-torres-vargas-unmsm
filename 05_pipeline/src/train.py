@@ -15,8 +15,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
-ROOT = Path(__file__).resolve().parents[2]
-DATA_PATH = ROOT / "data" / "processed" / "endes_anemia_children_2019_2024.csv"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_PATH = ROOT / "data" / "endes_anemia_children_2019_2024.csv"
 NUMERIC_FEATURES = ["age_months", "mother_education_code", "wealth_quintile"]
 CATEGORICAL_FEATURES = ["child_sex_code", "residence_code", "department_code", "survey_year"]
 FEATURES = NUMERIC_FEATURES + CATEGORICAL_FEATURES

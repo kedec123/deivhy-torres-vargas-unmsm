@@ -1,8 +1,7 @@
-"""Run a Fairlearn audit on Adult Census and a separate ENDES subgroup check."""
+"""Run a Fairlearn before-and-after audit on the Adult Census benchmark."""
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -29,11 +28,6 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "11_bias_audit"
-PIPELINE_SRC = ROOT / "05_pipeline" / "src"
-if str(PIPELINE_SRC) not in sys.path:
-    sys.path.insert(0, str(PIPELINE_SRC))
-
-from train import evaluate_model, load_training_data
 
 
 SEEDS = [13, 21, 42, 87, 100]
@@ -188,15 +182,10 @@ def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame, label_summar
         "",
         "The mitigation changes decision thresholds after fitting the baseline model. It does not change the historical processes that produced the Adult Census labels, prove that sex is the only relevant protected attribute, or resolve potential differences by intersecting characteristics. Fairness criteria can conflict, and the preferred trade-off depends on the real decision context. The course exercise therefore documents the choice and its consequences instead of presenting mitigation as a universal fix.",
         "",
-        "The ENDES subgroup check is deliberately separate. It uses the project model only to inspect one internal holdout by child sex and residence; it does not import an Adult Census mitigation rule into Peru or support individual-level decisions.",
-        "",
         "## Files",
         "",
         "- `bias_audit_splits.csv`: all split-level metrics.",
-        "- `bias_audit_by_group.csv`: group metrics for every split and approach.",
-        "- `bias_label_baseline.csv`: observed Adult Census label rates before modelling.",
         "- `before_after_chart.png`: average baseline-versus-mitigated comparison.",
-        "- `endes_subgroup_check.md`: a separate descriptive check for the project model, with no claim that Adult Census results transfer to Peru.",
     ]
     (OUTPUT_DIR / "bias_audit_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -220,47 +209,14 @@ def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame, label_summar
     plt.close(axis.figure)
 
 
-def write_endes_subgroup_check() -> None:
-    _, data = evaluate_model(load_training_data(), "logistic_regression", 42)
-    rows = []
-    for feature in ("child_sex_code", "residence_code"):
-        for group, frame in data.groupby(feature):
-            rows.append(
-                {
-                    "grouping": feature,
-                    "group": group,
-                    "n": len(frame),
-                    "observed_anemia_rate": frame["anemia_legacy"].mean(),
-                    "mean_predicted_probability": frame["predicted_probability"].mean(),
-                    "accuracy_at_0_5": accuracy_score(frame["anemia_legacy"], frame["predicted_label"]),
-                    "true_positive_rate_at_0_5": true_positive_rate(frame["anemia_legacy"], frame["predicted_label"]),
-                }
-            )
-    summary = pd.DataFrame(rows)
-    summary.to_csv(OUTPUT_DIR / "endes_subgroup_metrics.csv", index=False)
-    lines = [
-        "# ENDES Exploratory Subgroup Check",
-        "",
-        "This is separate from the Adult Census fairness benchmark. It describes one saved logistic-regression holdout split from the ENDES pipeline (seed 42) by child sex and urban-rural residence. It is a diagnostic table, not a fairness certification and not a basis for acting on individual predictions.",
-        "",
-        summary.to_markdown(index=False, floatfmt=".4f"),
-        "",
-        "Observed rates, average scores, accuracy, and true-positive rate can differ across groups for many reasons, including prevalence, sampling, measurement, missing variables, and the selected threshold. Any difference should prompt data and context review; it does not identify a cause or a policy response by itself.",
-    ]
-    (OUTPUT_DIR / "endes_subgroup_check.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     adult = fetch_adult(as_frame=True)
     label_summary, label_groups = raw_label_audit(adult)
     results, groups = run_adult_audit(adult)
     results.to_csv(OUTPUT_DIR / "bias_audit_splits.csv", index=False)
-    groups.to_csv(OUTPUT_DIR / "bias_audit_by_group.csv", index=False)
-    label_groups.to_csv(OUTPUT_DIR / "bias_label_baseline.csv", index=False)
     write_adult_report(results, groups, label_summary, label_groups)
-    write_endes_subgroup_check()
-    print("Wrote Adult Census fairness audit and ENDES subgroup check.")
+    print("Wrote the Adult Census fairness audit.")
 
 
 if __name__ == "__main__":

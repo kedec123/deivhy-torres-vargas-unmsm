@@ -26,7 +26,7 @@ Across the five fixed splits, logistic regression had mean AUC-ROC 0.7063, PR-AU
 
 ENDES is cross-sectional and records a limited set of variables. The model can reflect survey measurement, structural inequities, and the selected definition of anemia. Department and residence are useful for group description but can also encode historical disadvantage. The outcome is a survey-derived category, not a clinical examination. The 2024 measurement update makes cross-year interpretation especially sensitive.
 
-The model card is paired with `datasheet.md`, `11_bias_audit/endes_subgroup_check.md`, and the ethics protocol. A similar overall score across groups would not prove fairness, and a difference would require contextual investigation rather than a mechanical fix.
+The model card is paired with `datasheet.md` and the ethics protocol. A similar overall score across groups would not prove fairness, and a difference would require contextual investigation rather than a mechanical fix.
 
 ## Version, ownership, and training record
 

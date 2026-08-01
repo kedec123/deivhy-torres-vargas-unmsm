@@ -1,3 +1,0 @@
-query_id,source,search_date,search_string,records_retained_for_screening,notes
-PUBMED_20260731,PubMed,2026-07-31,"(anemia[Title/Abstract] OR anaemia[Title/Abstract]) AND Peru[Title/Abstract] AND (child*[Title/Abstract] OR infant*[Title/Abstract] OR toddler*[Title/Abstract])",10,"Focused candidate set retained after checking titles, abstracts, and persistent PubMed records."
-SCIELO_20260731,SciELO,2026-07-31,"anemia AND ninos AND Peru AND ENDES",2,"Focused candidate set retained after checking SciELO article pages for Peru-specific child evidence."

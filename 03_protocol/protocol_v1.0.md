@@ -54,15 +54,15 @@ The conceptual frame distinguishes observed indicators from the processes they m
 
 ## 6. Design, source, and population
 
-The study uses a repeated cross-sectional secondary design with anonymous public-use ENDES microdata. For every year from 2019 through 2024, the workflow reads the child haemoglobin module (`REC44`), birth-history module (`REC21`), and household/mother module (`REC0111`). The original module archives are preserved unchanged under DVC and are joined temporarily using ENDES keys.
+The study uses a repeated cross-sectional secondary design with anonymous public-use ENDES microdata. For every year from 2019 through 2024, the workflow reads the child haemoglobin module (`REC44`), birth-history module (`REC21`), and household/mother module (`REC0111`). The original archives are read without modification and joined temporarily using ENDES keys; DVC versions the resulting de-identified analytical CSV.
 
-The primary population is children aged 6-35 completed months with a valid legacy anemia category (`HW57`). The analytical CSV contains one project-generated `analysis_id` per eligible child. ENDES case, household, and person keys are used only during the build and are excluded from the released analytical file. The detailed inclusion, exclusion, and missing-data rules are in `data/metadata/analysis_population.md`.
+The primary population is children aged 6-35 completed months with a valid legacy anemia category (`HW57`). The analytical CSV contains one project-generated `analysis_id` per eligible child. ENDES case, household, and person keys are used only during the build and are excluded from the released analytical file. The detailed inclusion, exclusion, and missing-data rules are in `05_pipeline/docs/analysis_population.md`.
 
 ## 7. Variables and measurement
 
 The primary outcome is `anemia_legacy`, coded one for legacy category levels 1-3 and zero for level 4. The primary trend uses this definition in all six years. `HW56A` and `HW57A` are retained only for a 2024 sensitivity discussion; they do not replace the primary historical outcome.
 
-The planned explanatory variables are child age in months, child sex code, maternal education code, wealth quintile, urban-rural residence, department, and survey year. The normalized individual sampling weight (`V005/1,000,000`), cluster, and stratum are retained to support design-aware reporting. The data dictionary in `data/metadata/data_dictionary.csv` provides the source field, coding, availability, and intended role for every released variable.
+The planned explanatory variables are child age in months, child sex code, maternal education code, wealth quintile, urban-rural residence, department, and survey year. The normalized individual sampling weight (`V005/1,000,000`), cluster, and stratum are retained to support design-aware reporting. The data dictionary in `05_pipeline/docs/data_dictionary.csv` provides the source field, coding, availability, and intended role for every released variable.
 
 ## 8. Analysis plan
 
@@ -74,9 +74,9 @@ The technical artefact will run logistic regression and random forest with fixed
 
 ## 9. Reproducibility and data governance
 
-Git records code and document history. DVC records the raw archive and processed-data state, while MLflow records experiment parameters, metrics, data hash, and Git commit. The repository provides a Colab notebook, pinned dependencies, a Dockerfile, an optional Docker Compose configuration, and a stranger-test checklist. The source manifest records the official retrieval URL, date, archive name, checksum, module, and transformation for every input.
+Git records code and document history. DVC records the analytical-data state, while MLflow records experiment parameters, metrics, data hash, and Git commit. The repository provides a Colab notebook, pinned dependencies, a Dockerfile, and a documented local reproduction route. The source manifest records the official retrieval URL, date, archive name, checksum, module, and transformation for every input.
 
-No credential is stored in Git. A shared Google Drive DVC remote is configured, but a private service-account key is required before a clean-clone `dvc pull` test can be claimed as complete. The required local configuration is documented in `data/DVC_ACCESS.md`.
+No credential is stored in Git. A shared Google Drive DVC remote is configured, but a private service-account key is required before a clean-clone `dvc pull` test can be claimed as complete. The required local configuration is documented in `05_pipeline/README.md`.
 
 ## 10. Ethics, risks, and dissemination
 
@@ -103,6 +103,6 @@ These are not reasons to abandon the study. They define the claim the study can 
 
 ## Repository-linked sources
 
-- ENDES source and variable records: `data/metadata/source_manifest.csv` and `data/metadata/data_dictionary.csv`.
-- Literature search and references: `04_literature/search_log.csv`, `04_literature/included_studies.md`, and `04_literature/references.bib`.
+- ENDES source and variable records: `05_pipeline/docs/source_manifest.csv` and `05_pipeline/docs/data_dictionary.csv`.
+- Literature search and references: `04_literature/systematic_review.md`.
 - Reproducibility, ethics, management, model, bias, and integrity records: `05_pipeline/` through `12_integrity/`.

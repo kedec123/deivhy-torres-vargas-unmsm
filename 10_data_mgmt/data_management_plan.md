@@ -25,8 +25,8 @@ GitHub is the code and documentation history; DVC/Drive is the data-artifact sto
 | Asset | Location | Versioning method | Access level | Responsible action |
 |---|---|---|---|---|
 | Original ENDES archives | `data/raw/` | DVC pointer and remote cache | Restricted to authorised collaborators | Preserve unchanged; verify checksum. |
-| De-identified analytical CSV | `data/processed/` | DVC pipeline output and lock file | Restricted research use | Rebuild only through the documented script. |
-| Metadata and data contract | `data/metadata/` | Git | Repository collaborators | Review when a field or rule changes. |
+| De-identified analytical CSV | `05_pipeline/data/` | DVC pointer and local cache | Restricted research use | Rebuild only through the documented script. |
+| Metadata and data contract | `05_pipeline/docs/` | Git | Repository collaborators | Review when a field or rule changes. |
 | Aggregate figures and tables | `05_pipeline/docs/` | Git | Repository readers | Regenerate after a documented code or data change. |
 | MLflow tracking store | `mlruns/` | DVC pointer | Restricted research use | Preserve run provenance and avoid manual edits. |
 
@@ -51,7 +51,7 @@ The repository and DVC artefacts will be retained through course evaluation and 
 
 ## Quality assurance and change control
 
-The build script is the only approved route for regenerating the processed CSV. It checks the expected modules, eligibility age range, outcome presence, analysis-ID uniqueness, and positive sampling weights. The resulting checks are written to `data/metadata/quality_checks.md`. Tests in `tests/` check the data contract, source-manifest coverage, PRISMA counts, notebook structure, and required course artefacts.
+The build script is the only approved route for regenerating the analytical CSV. It checks the expected modules, eligibility age range, outcome presence, analysis-ID uniqueness, and positive sampling weights. The resulting checks are written to `05_pipeline/docs/quality_checks.md`. The notebook is validated as JSON and the full build, analysis, and fixed-seed experiment sequence is rerun before publication.
 
 A material change is any change to a source archive, variable definition, age rule, outcome definition, join logic, model feature set, seed set, or output interpretation. For a material change, the author must update the relevant script or parameter file, regenerate the dependent outputs, inspect the DVC state, update the protocol and data documentation where necessary, and make a descriptive Git commit. A change must not be hidden by manually editing a generated result file.
 

@@ -20,11 +20,11 @@ import pandas as pd
 from dbfread import DBF
 
 
-ROOT = Path(__file__).resolve().parents[2]
-RAW_DIR = ROOT / "data" / "raw"
-PROCESSED_DIR = ROOT / "data" / "processed"
-METADATA_DIR = ROOT / "data" / "metadata"
-OUTPUT_PATH = PROCESSED_DIR / "endes_anemia_children_2019_2024.csv"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = Path(__file__).resolve().parent
+RAW_DIR = DATA_DIR / "raw"
+METADATA_DIR = ROOT / "docs"
+OUTPUT_PATH = DATA_DIR / "endes_anemia_children_2019_2024.csv"
 RETRIEVAL_DATE = "2026-07-31"
 
 MODULES = {
@@ -253,7 +253,7 @@ def main() -> None:
     missing = [filename for modules in MODULES.values() for filename, _, _ in modules.values() if not (RAW_DIR / filename).exists()]
     if missing:
         raise FileNotFoundError("Missing ENDES archives in data/raw: " + ", ".join(missing))
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     dataset = pd.concat([build_year(year) for year in sorted(MODULES)], ignore_index=True)
     dataset.to_csv(OUTPUT_PATH, index=False)
     write_metadata(dataset)

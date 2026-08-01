@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-ROOT = Path(__file__).resolve().parents[2]
-DATA_PATH = ROOT / "data" / "processed" / "endes_anemia_children_2019_2024.csv"
-DOCS_DIR = ROOT / "05_pipeline" / "docs"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_PATH = ROOT / "data" / "endes_anemia_children_2019_2024.csv"
+DOCS_DIR = ROOT / "docs"
 
 
 def weighted_summary(frame: pd.DataFrame, groups: list[str]) -> pd.DataFrame:

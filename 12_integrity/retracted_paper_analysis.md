@@ -37,10 +37,21 @@ If a cited study, data source, or reported result used in this repository is cor
 
 ## How the record was assessed
 
-The analysis began with the publisher's retraction record, not with a social-media summary or an assumption based on the study topic. The article and notice were read for statements the publisher explicitly made, then separated from the broader conclusions that a responsible reader may draw about use of the article. The source record in `source_records.md` preserves the verification route and date.
+The analysis began with the publisher's retraction record, not with a social-media summary or an assumption based on the study topic. The article and notice were read for statements the publisher explicitly made, then separated from the broader conclusions that a responsible reader may draw about use of the article. The verification route and date are preserved below.
 
 This method is intentionally narrow. It does not attempt to investigate the authors, reconstruct the disputed analysis, or reanalyse the underlying trials. Those activities would require evidence and authority that this repository does not have. The value of the exercise is learning to stop at the boundary of the available record while still acting appropriately on a retraction.
 
 ## Practical questions for future citations
 
 Before relying on a health-research paper, the author should check whether the article has a correction, expression of concern, or retraction; inspect whether the claim being cited is still supported by the current record; and revise any dependent text if its evidentiary status changes. This is especially important when a study informs a protocol decision, a metric choice, or a clinical-policy statement.
+
+## Source record
+
+| Record | Verification source | Checked | Use in this repository |
+|---|---|---|---|
+| ENDES microdata access and modules | [INEI microdata catalogue](https://www.inei.gob.pe/media/difusion/apps/files/basic-html/page3.html) and the direct module URLs in `05_pipeline/docs/source_manifest.csv` | 2026-07-31 | Data construction. |
+| ENDES 2024 measurement context | [ENDES 2024 portal](https://proyectos.inei.gob.pe/endes/2024/departamentales/map/principal.html) | 2026-07-31 | Comparability boundary. |
+| Literature records | Persistent PubMed and SciELO links in `04_literature/systematic_review.md` | 2026-07-31 | Review and protocol context. |
+| Reproducibility audit paper | [PubMed Central full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC13305737/) | 2026-07-31 | Session 6 audit. |
+| Retraction record | [Publisher retraction page](https://www.sciencedirect.com/science/article/pii/S2468024920318519) | 2026-07-31 | Session 12 analysis. |
+| Peruvian data-protection framework | [Law No. 29733](https://www.gob.pe/institucion/anpd/normas-legales/358664-29733) | 2026-07-31 | Data-management and ethics context. |

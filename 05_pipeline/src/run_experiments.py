@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 import mlflow
+import matplotlib.pyplot as plt
 import pandas as pd
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -17,9 +18,9 @@ if str(SCRIPT_DIR) not in sys.path:
 from train import FEATURES, evaluate_model, load_training_data
 
 
-ROOT = Path(__file__).resolve().parents[2]
-DATA_PATH = ROOT / "data" / "processed" / "endes_anemia_children_2019_2024.csv"
-RESULTS_PATH = ROOT / "05_pipeline" / "docs" / "experiment_results.csv"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_PATH = ROOT / "data" / "endes_anemia_children_2019_2024.csv"
+RESULTS_PATH = ROOT / "docs" / "experiment_results.csv"
 MLRUNS_PATH = ROOT / "mlruns"
 SEEDS = [13, 21, 42, 87, 100]
 
@@ -37,6 +38,22 @@ def git_commit() -> str:
         return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     except subprocess.CalledProcessError:
         return "unavailable"
+
+
+def render_experiment_summary(results: pd.DataFrame) -> None:
+    averages = results.groupby("model", as_index=False)[["auc_roc", "pr_auc", "f1"]].mean().melt(
+        id_vars="model", var_name="metric", value_name="value"
+    )
+    figure, axis = plt.subplots(figsize=(8, 4.5))
+    for model_name, color in (("logistic_regression", "#8d2f23"), ("random_forest", "#396a50")):
+        subset = averages[averages["model"] == model_name]
+        axis.plot(subset["metric"], subset["value"], marker="o", linewidth=2, label=model_name.replace("_", " "), color=color)
+    axis.set(title="Exploratory ENDES experiments: mean metric across five seeds", xlabel="Metric", ylabel="Score", ylim=(0, 1))
+    axis.grid(axis="y", alpha=0.25)
+    axis.legend()
+    figure.tight_layout()
+    figure.savefig(ROOT / "docs" / "mlflow_runs.png", dpi=180)
+    plt.close(figure)
 
 
 def main() -> None:
@@ -68,7 +85,9 @@ def main() -> None:
             results.append(metrics)
             print(f"{model_name} seed={seed}: AUC={metrics['auc_roc']:.4f}, F1={metrics['f1']:.4f}")
 
-    pd.DataFrame(results).to_csv(RESULTS_PATH, index=False)
+    results_frame = pd.DataFrame(results)
+    results_frame.to_csv(RESULTS_PATH, index=False)
+    render_experiment_summary(results_frame)
     print(f"Saved {len(results)} experiment rows to {RESULTS_PATH.relative_to(ROOT)}")
 
 

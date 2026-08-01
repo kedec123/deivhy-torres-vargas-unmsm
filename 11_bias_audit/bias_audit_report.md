@@ -43,12 +43,7 @@ The benchmark begins with a visible difference in favourable-label rates by reco
 
 The mitigation changes decision thresholds after fitting the baseline model. It does not change the historical processes that produced the Adult Census labels, prove that sex is the only relevant protected attribute, or resolve potential differences by intersecting characteristics. Fairness criteria can conflict, and the preferred trade-off depends on the real decision context. The course exercise therefore documents the choice and its consequences instead of presenting mitigation as a universal fix.
 
-The ENDES subgroup check is deliberately separate. It uses the project model only to inspect one internal holdout by child sex and residence; it does not import an Adult Census mitigation rule into Peru or support individual-level decisions.
-
 ## Files
 
 - `bias_audit_splits.csv`: all split-level metrics.
-- `bias_audit_by_group.csv`: group metrics for every split and approach.
-- `bias_label_baseline.csv`: observed Adult Census label rates before modelling.
 - `before_after_chart.png`: average baseline-versus-mitigated comparison.
-- `endes_subgroup_check.md`: a separate descriptive check for the project model, with no claim that Adult Census results transfer to Peru.
