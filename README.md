@@ -18,7 +18,7 @@ The project also documents the methodological and integrity work requested in th
 | `02_method/` | E.D.F.C.V. comparison of three candidate methods. |
 | `03_protocol/` | The short outline (`v0.1`) and the first full protocol draft (`v1.0`). |
 | `04_literature/` | Search records, screening log, PRISMA flow, included studies, and gap analysis. |
-| `05_pipeline/` | Scripts, Colab notebook, results, and instructions for the ENDES workflow. |
+| `05_pipeline/` | Scripts, Colab notebook, compatibility files, results, environment record, and instructions for the ENDES workflow. |
 | `06_repro_audit/` to `12_integrity/` | Reproducibility, documentation, ethics, data stewardship, fairness, and integrity materials. |
 | `14_peer_review/` and `reflections/` | Templates that must be completed with real peer feedback and the author's own reflection. |
 | `data/` | Data contract and DVC-managed ENDES source archives and processed analytical CSV. |
@@ -43,7 +43,7 @@ uv pip install --python .venv -r requirements.txt
 .\.venv\Scripts\mlflow ui --backend-store-uri .\mlruns
 ```
 
-The final command opens the local MLflow interface at `http://127.0.0.1:5000`. Full commands, expected outputs, and the Docker limitation are documented in [`05_pipeline/README.md`](05_pipeline/README.md).
+The final command opens the local MLflow interface at `http://127.0.0.1:5000`. Full commands, expected outputs, recorded hardware, Docker Compose option, and the final stranger-test checklist are documented in [`05_pipeline/README.md`](05_pipeline/README.md).
 
 ## Scope and responsible use
 

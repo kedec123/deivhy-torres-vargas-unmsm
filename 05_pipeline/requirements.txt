@@ -1,0 +1,3 @@
+# Compatibility entry point for the Session 5 folder.
+# The canonical, pinned environment remains at the repository root.
+-r ../requirements.txt

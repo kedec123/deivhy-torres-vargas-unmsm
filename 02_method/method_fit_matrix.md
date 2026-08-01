@@ -25,6 +25,8 @@ Scores range from 1 (weak fit) to 5 (strong fit). They make the reasoning visibl
 | **V - Venue fit**: appropriate for public-health and nutrition audiences | 5 | 4 | 4 |
 | **Total** | **25** | **15** | **16** |
 
+The highest score is not a claim that the other two methods are weak research. It records fit to this particular question, data position, and course timeline. If the question changed from national patterns to caregiver experience or a defined intervention effect, the ranking would change as well.
+
 ## Decision
 
 Repeated cross-sectional secondary analysis is the strongest option because the question is national, recent, and associative. ENDES offers repeated coverage, standardized child haemoglobin information, and social and territorial variables. It can support a careful account of distribution and persistence without pretending to answer a causal question it was not designed to answer.
@@ -34,3 +36,9 @@ A primary survey is attractive for local depth, but it would shift the study awa
 ## Boundary of the choice
 
 The selected method can identify weighted patterns and adjusted associations. It cannot establish that maternal education, wealth, residence, or a programme caused an individual child's anemia status. The protocol and final reporting will keep that distinction explicit.
+
+## Implementation implications
+
+The selected method requires four safeguards. First, the primary trend must use one outcome definition across the series and show the 2024 transition separately. Second, descriptive estimates should use the documented ENDES weight and preserve the cluster and stratum fields for a later design-based analysis. Third, preprocessing for the exploratory classifier must be learned only in the training portion of the data. Fourth, tables and narratives must avoid language that turns territorial or socioeconomic associations into deficits of families or communities.
+
+The technical classifier does not change the method choice. It is a bounded Session 5 artefact used to practise versioning, leakage control, experiment tracking, and subgroup inspection. The substantive method remains repeated cross-sectional secondary analysis.

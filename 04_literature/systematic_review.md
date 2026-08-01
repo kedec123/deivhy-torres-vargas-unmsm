@@ -46,3 +46,13 @@ The review does not support a simple statement that one factor "causes" anemia o
 ## Connection to the present study
 
 The contribution of this project is deliberately modest and specific. It creates a documented 2019-2024 ENDES file for children aged 6-35 months, retains a legacy-comparable outcome across years, reports weighted descriptive patterns, and treats the 2024 update as a sensitivity issue. The project will not claim to estimate the causal effect of supplementation or of any social characteristic. The detailed study-by-study evidence is in `included_studies.md`; full citation records are in `references.bib`.
+
+## Audit trail and limitations
+
+The review can be audited because the search, screening, study table, bibliography, and PRISMA diagram are separate files rather than a retrospective narrative. `search_log.csv` records the exact source, date, query, and retained count. `screening_log.csv` records a decision for each retained record, including the two full-text exclusions. The PRISMA counts are calculated from that log.
+
+This is still a course-scale review. It did not search every global database, perform a duplicate independent screening exercise, or conduct a formal risk-of-bias assessment for each design. Its purpose is to show a transparent route from a bounded search to a defensible protocol question. A thesis-level systematic review would need a registered protocol, broader retrieval, independent screening, and a pre-specified appraisal method.
+
+## Implication for the protocol
+
+The literature supports a question about current distribution, trends, and observed associations. It does not justify a claim that ENDES alone can evaluate supplementation effectiveness, identify individual clinical risk, or settle whether a national measurement change represents a biological change. Those boundaries are carried into `03_protocol/protocol_v1.0.md`, the model card, and the ethics documents.

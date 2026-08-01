@@ -19,3 +19,18 @@ The notice does not establish that every underlying trial result was invalid, id
 ## Lesson for this repository
 
 This project keeps the data-build logic, parameters, DVC state, experiment records, and protocol versions visible. If an analysis decision changes, the change should be documented in Git and the resulting outputs regenerated. Transparent records do not prevent mistakes, but they make them easier to inspect and correct.
+
+## Evidence boundary
+
+| Statement | Status in this analysis | Basis |
+|---|---|---|
+| The pooled analysis is retracted. | Directly supported. | Publisher article page and linked formal retraction notice. |
+| The notice identifies concerns about analysis-plan deviations and unresolved author-editor issues. | Directly supported. | Notice as summarised in the record above. |
+| The original paper should not be used as a stable source for clinical or policy conclusions. | Reasonable research-use inference. | Retraction status and stated concerns. |
+| Every underlying trial result is invalid or a particular person acted improperly. | Not established. | The notice does not provide sufficient evidence for those claims. |
+
+This distinction matters. A retraction is serious, but responsible integrity analysis does not turn a notice into an unsupported story about intent, blame, or every component of a wider evidence base.
+
+## Repository response rule
+
+If a cited study, data source, or reported result used in this repository is corrected, withdrawn, or found to be erroneous, the author will create a dated issue or commit that identifies the affected artefact, revises the interpretation, regenerates any dependent output, and preserves the prior version in Git history. The aim is traceable correction rather than silent replacement.

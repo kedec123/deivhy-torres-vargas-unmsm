@@ -51,6 +51,13 @@ def adult_pipeline(features: pd.DataFrame) -> Pipeline:
     return Pipeline([("preprocess", preprocessor), ("model", LogisticRegression(max_iter=1500, class_weight="balanced"))])
 
 
+def disparate_impact(group_frame: pd.DataFrame) -> float:
+    rates = group_frame["selection_rate"].dropna().astype(float)
+    if rates.empty or rates.max() == 0:
+        return float("nan")
+    return float(rates.min() / rates.max())
+
+
 def audit_metrics(y_true: pd.Series, y_pred: np.ndarray, sensitive: pd.Series) -> tuple[dict, pd.DataFrame]:
     metric_frame = MetricFrame(
         metrics={
@@ -67,6 +74,7 @@ def audit_metrics(y_true: pd.Series, y_pred: np.ndarray, sensitive: pd.Series) -
     summary = {
         "accuracy": accuracy_score(y_true, y_pred),
         "demographic_parity_difference": demographic_parity_difference(y_true, y_pred, sensitive_features=sensitive),
+        "disparate_impact": disparate_impact(group_frame),
         "equalized_odds_difference": equalized_odds_difference(y_true, y_pred, sensitive_features=sensitive),
         "selection_rate_difference": metric_frame.difference(method="between_groups")["selection_rate"],
         "true_positive_rate_difference": metric_frame.difference(method="between_groups")["true_positive_rate"],
@@ -75,8 +83,15 @@ def audit_metrics(y_true: pd.Series, y_pred: np.ndarray, sensitive: pd.Series) -
     return summary, group_frame
 
 
-def run_adult_audit() -> tuple[pd.DataFrame, pd.DataFrame]:
-    adult = fetch_adult(as_frame=True)
+def raw_label_audit(adult) -> tuple[pd.DataFrame, pd.DataFrame]:
+    target = adult.target.astype(str).str.contains(">50K").astype(int)
+    sensitive = adult.data["sex"].astype(str)
+    summary, groups = audit_metrics(target, target.to_numpy(), sensitive)
+    groups = groups.rename(columns={"selection_rate": "observed_favorable_rate"})
+    return pd.DataFrame([summary]), groups
+
+
+def run_adult_audit(adult) -> tuple[pd.DataFrame, pd.DataFrame]:
     features = adult.data.copy()
     target = adult.target.astype(str).str.contains(">50K").astype(int)
     sensitive = features["sex"].astype(str)
@@ -113,10 +128,11 @@ def run_adult_audit() -> tuple[pd.DataFrame, pd.DataFrame]:
     return pd.DataFrame(results), pd.concat(group_results, ignore_index=True)
 
 
-def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame) -> None:
+def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame, label_summary: pd.DataFrame, label_groups: pd.DataFrame) -> None:
     summary = results.groupby("approach", as_index=False).agg(
         accuracy_mean=("accuracy", "mean"),
         demographic_parity_difference_mean=("demographic_parity_difference", "mean"),
+        disparate_impact_mean=("disparate_impact", "mean"),
         equalized_odds_difference_mean=("equalized_odds_difference", "mean"),
         equalized_odds_difference_min=("equalized_odds_difference", "min"),
         equalized_odds_difference_max=("equalized_odds_difference", "max"),
@@ -124,11 +140,19 @@ def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame) -> None:
     lines = [
         "# Fairness Audit: Adult Census Benchmark",
         "",
-        "This audit uses Fairlearn's Adult Census dataset, not ENDES. It is included to meet the course requirement for a reproducible fairness exercise on a standard benchmark. The sensitive feature is recorded sex. The model deliberately excludes sex from training, then evaluates group differences by sex.",
+        "This audit uses Fairlearn's Adult Census dataset, not ENDES. It is included to meet the course requirement for a reproducible fairness exercise on a standard benchmark. The sensitive feature is recorded sex. The model deliberately excludes sex from training, then evaluates group differences by sex. The favourable label for this exercise is income above 50K; this convention is specific to the benchmark and does not describe a health outcome.",
+        "",
+        "## Labels before modelling",
+        "",
+        "The first table checks whether the benchmark label already differs by the sensitive feature. Disparate impact is the smaller group selection rate divided by the larger one. A value closer to 1 indicates similar selection rates; it does not establish that the data-generating process is fair.",
+        "",
+        label_summary.to_markdown(index=False, floatfmt=".4f"),
+        "",
+        label_groups.to_markdown(index=False, floatfmt=".4f"),
         "",
         "## Procedure",
         "",
-        "A logistic-regression baseline was evaluated on five stratified train-test splits. A Fairlearn `ThresholdOptimizer` with an equalized-odds constraint was then fitted on each training split. The audit reports accuracy, demographic-parity difference, and equalized-odds difference. Lower differences are closer to parity for the selected metric, but no single metric proves fairness.",
+        "A logistic-regression baseline was evaluated on five stratified train-test splits. A Fairlearn `ThresholdOptimizer` with an equalized-odds constraint was then fitted on each training split. The audit reports accuracy, demographic-parity difference, disparate impact, and equalized-odds difference. Lower differences are closer to parity for the difference measures; disparate impact is read against 1. No single metric proves fairness.",
         "",
         "## Results across fixed splits",
         "",
@@ -140,6 +164,7 @@ def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame) -> None:
         "",
         "- `bias_audit_splits.csv`: all split-level metrics.",
         "- `bias_audit_by_group.csv`: group metrics for every split and approach.",
+        "- `bias_label_baseline.csv`: observed Adult Census label rates before modelling.",
         "- `before_after_chart.png`: average baseline-versus-mitigated comparison.",
         "- `endes_subgroup_check.md`: a separate descriptive check for the project model, with no claim that Adult Census results transfer to Peru.",
     ]
@@ -197,10 +222,13 @@ def write_endes_subgroup_check() -> None:
 
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    results, groups = run_adult_audit()
+    adult = fetch_adult(as_frame=True)
+    label_summary, label_groups = raw_label_audit(adult)
+    results, groups = run_adult_audit(adult)
     results.to_csv(OUTPUT_DIR / "bias_audit_splits.csv", index=False)
     groups.to_csv(OUTPUT_DIR / "bias_audit_by_group.csv", index=False)
-    write_adult_report(results, groups)
+    label_groups.to_csv(OUTPUT_DIR / "bias_label_baseline.csv", index=False)
+    write_adult_report(results, groups, label_summary, label_groups)
     write_endes_subgroup_check()
     print("Wrote Adult Census fairness audit and ENDES subgroup check.")
 

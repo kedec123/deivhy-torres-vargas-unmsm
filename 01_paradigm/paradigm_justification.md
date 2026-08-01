@@ -27,3 +27,11 @@ The intended contribution is a transparent recent baseline for public-health dis
 ## 5. Tension to manage
 
 The central tension is comparability. The 2024 measurement update can change estimated prevalence even when the underlying health situation has not changed by the same amount. For that reason, the primary series uses the legacy ENDES category in all years, while the updated 2024 field is retained for sensitivity analysis. This is a methodological safeguard, not a claim that one definition is universally superior.
+
+There is a second tension between a population description and the wish to explain why anemia persists. Variables such as wealth, education, residence, and department are useful descriptors of unequal conditions, but they are not random exposures. The study can show a pattern that deserves public-health attention; it cannot identify the mechanism behind that pattern or the effect of a programme without a different design.
+
+## 6. Evidence and boundaries
+
+The choice is supported by the repeated, nationally structured ENDES data and by the literature record in `04_literature/`. Velasquez-Hurtado et al. (2016) and Campos-Sanchez et al. (2025) are particularly relevant because they analyse young Peruvian children and make the age range and measurement definition visible. The study will treat those sources as context, not as a substitute for checking the current modules and data dictionary.
+
+The quantitative paradigm does not make qualitative evidence irrelevant. Caregiver and service-delivery research can explain dimensions that ENDES cannot observe, including acceptability and implementation barriers. That evidence will inform interpretation and future work, but it will not be merged with the numerical analysis unless a later protocol explicitly defines a mixed-methods integration strategy.

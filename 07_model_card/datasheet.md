@@ -23,3 +23,31 @@ Do not attempt to re-identify a child, link the file to external individual-leve
 ## Maintenance and distribution
 
 Data files are DVC-managed in an access-controlled Google Drive remote. Git retains code and metadata. Access should be granted only to authorised course collaborators, and any release outside that group must be checked against the INEI terms and the project data-management plan.
+
+## Dataset composition
+
+| Aspect | Record |
+|---|---|
+| Unit of analysis | One eligible child record from the public-use survey modules |
+| Time coverage | ENDES 2019-2024 |
+| Eligibility | Age 6-35 completed months and a valid legacy `HW57` category |
+| Records in current build | 57,539 |
+| Direct identifiers in released CSV | None |
+| Sampling-design fields retained | Normalized weight, cluster, and stratum |
+| Geographic detail retained | Department code and urban-rural residence; no coordinate or household key |
+
+The released analytical file is smaller than the source modules by design. It is not a replica of ENDES and it should not be used to reconstruct an ENDES respondent or household record.
+
+## Processing decisions
+
+The build reads the untouched archives, standardises field names in memory, joins the required modules on temporary ENDES keys, applies the age and outcome rules, derives the binary legacy outcome, and removes the join keys before writing the CSV. The source archives are not edited. `source_manifest.csv` records the archive checksum and transformation path, while `quality_checks.md` records the expected row count, age range, and basic contract checks.
+
+No primary outcome value is imputed. Missing explanatory values remain available to the downstream training pipeline, where imputation is fitted within the training partition only. The processed file contains both legacy and updated 2024 measurement fields so that the difference can be inspected; only the legacy definition is used for the historical primary outcome.
+
+## Collection context and representativeness
+
+ENDES is a repeated household survey, not a clinical registry or a census. The dataset is appropriate for the specified survey population when weights and design information are handled correctly. It does not represent children outside the eligible age range, children missing a valid primary outcome, or every biological and service factor relevant to anemia. The current descriptive script uses weights but does not yet produce design-based uncertainty; that work is explicitly pending before final population inference.
+
+## Sensitive use and distribution controls
+
+Although the analytical CSV excludes direct identifiers, it remains research data. Users must not attempt re-identification, join it to external person-level data, publish small cells, or use it to label a family, community, or department as inherently high risk. The raw archives, processed CSV, and MLflow store are versioned with DVC and are accessible only through the agreed project remote. Any broader sharing requires a new review of INEI conditions, disclosure risk, and the data-management plan.

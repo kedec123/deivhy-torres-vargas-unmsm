@@ -1,3 +1,5 @@
+# Build from the repository root so the canonical requirements and DVC files are included:
+# docker build -f 05_pipeline/Dockerfile -t endes-anemia-pipeline .
 FROM python:3.11-slim
 
 RUN apt-get update \

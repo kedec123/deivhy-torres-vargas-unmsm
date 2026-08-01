@@ -1,0 +1,16 @@
+services:
+  workbench:
+    build: .
+    volumes:
+      - ./:/project
+    ports:
+      - "8888:8888"
+    command: jupyter lab --ip=0.0.0.0 --no-browser --allow-root
+
+  mlflow:
+    build: .
+    volumes:
+      - ./:/project
+    ports:
+      - "5000:5000"
+    command: mlflow ui --host 0.0.0.0 --backend-store-uri /project/mlruns
