@@ -2,7 +2,7 @@
 
 ## Data lifecycle
 
-The project receives anonymous official ENDES module archives, creates a de-identified analysis file, and produces aggregate tables, figures, code, and MLflow tracking artifacts. The source archives and processed CSV are versioned with DVC; Git holds the code, metadata, checksums, and lock files. The source manifest is the authoritative record of origin and transformation.
+The project receives anonymous official ENDES module archives, creates a de-identified analysis file, and produces aggregate tables, figures, code, and MLflow tracking artifacts. The original archives remain local and are excluded from Git; the processed CSV is represented by a DVC pointer. Git holds code, metadata, checksums, aggregate outputs, and MLflow tracking records. The source manifest is the authoritative record of origin and transformation.
 
 ## Access and security
 
@@ -24,11 +24,11 @@ GitHub is the code and documentation history; DVC/Drive is the data-artifact sto
 
 | Asset | Location | Versioning method | Access level | Responsible action |
 |---|---|---|---|---|
-| Original ENDES archives | `data/raw/` | DVC pointer and remote cache | Restricted to authorised collaborators | Preserve unchanged; verify checksum. |
+| Original ENDES archives | `05_pipeline/data/raw/` | Local files excluded from Git | Restricted to authorised collaborators | Preserve unchanged; verify checksum. |
 | De-identified analytical CSV | `05_pipeline/data/` | DVC pointer and local cache | Restricted research use | Rebuild only through the documented script. |
 | Metadata and data contract | `05_pipeline/docs/` | Git | Repository collaborators | Review when a field or rule changes. |
 | Aggregate figures and tables | `05_pipeline/docs/` | Git | Repository readers | Regenerate after a documented code or data change. |
-| MLflow tracking store | `mlruns/` | DVC pointer | Restricted research use | Preserve run provenance and avoid manual edits. |
+| MLflow tracking store | `05_pipeline/mlruns/` | Git-tracked experiment metadata | Repository readers | Preserve run provenance and avoid manual edits. |
 
 ## FAIR implementation record
 

@@ -37,7 +37,7 @@ The model card is paired with `datasheet.md` and the ethics protocol. A similar 
 | Framework | scikit-learn 1.5.2 |
 | Training population | 57,539 eligible de-identified ENDES child records before the stratified split |
 | Outcome | Legacy binary anemia category derived from `HW57` |
-| Data version evidence | DVC lock state, source checksums, and dataset SHA-256 logged in MLflow |
+| Data version evidence | DVC pointer, source checksums, and dataset SHA-256 logged in MLflow |
 | Reproducibility evidence | Five fixed seeds, pinned dependencies, Git commit, and MLflow records |
 
 ## Reported internal performance

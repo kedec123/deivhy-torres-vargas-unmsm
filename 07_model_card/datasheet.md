@@ -6,7 +6,7 @@
 
 ## Collection and processing
 
-The source is the official INEI ENDES microdata catalogue. For each year, the pipeline reads the child haemoglobin module (`REC44`), birth history (`REC21`), and mother/household module (`REC0111`). The original archives are kept unchanged under DVC. They are joined temporarily using ENDES keys, then the keys are excluded. A project-generated `analysis_id` is not an ENDES identifier and is only a reproducibility label.
+The source is the official INEI ENDES microdata catalogue. For each year, the pipeline reads the child haemoglobin module (`REC44`), birth history (`REC21`), and mother/household module (`REC0111`). The original archives remain unchanged in local `data/raw/` and are excluded from Git. They are joined temporarily using ENDES keys, then the keys are excluded. A project-generated `analysis_id` is not an ENDES identifier and is only a reproducibility label.
 
 ## Variables and labels
 
@@ -22,7 +22,7 @@ Do not attempt to re-identify a child, link the file to external individual-leve
 
 ## Maintenance and distribution
 
-Data files are DVC-managed in an access-controlled Google Drive remote. Git retains code and metadata. Access should be granted only to authorised course collaborators, and any release outside that group must be checked against the INEI terms and the project data-management plan.
+The de-identified analytical CSV is represented by a DVC pointer and intended for retrieval from an access-controlled Google Drive remote. Git retains code, metadata, aggregate outputs, and the MLflow tracking records. Access should be granted only to authorised course collaborators, and any release outside that group must be checked against the INEI terms and the project data-management plan.
 
 ## Dataset composition
 
@@ -50,4 +50,4 @@ ENDES is a repeated household survey, not a clinical registry or a census. The d
 
 ## Sensitive use and distribution controls
 
-Although the analytical CSV excludes direct identifiers, it remains research data. Users must not attempt re-identification, join it to external person-level data, publish small cells, or use it to label a family, community, or department as inherently high risk. The raw archives, processed CSV, and MLflow store are versioned with DVC and are accessible only through the agreed project remote. Any broader sharing requires a new review of INEI conditions, disclosure risk, and the data-management plan.
+Although the analytical CSV excludes direct identifiers, it remains research data. Users must not attempt re-identification, join it to external person-level data, publish small cells, or use it to label a family, community, or department as inherently high risk. The original archives stay local, the processed CSV is represented by its DVC pointer, and the MLflow tracking records are committed in Git. Any broader sharing requires a new review of INEI conditions, disclosure risk, and the data-management plan.

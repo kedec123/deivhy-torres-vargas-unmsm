@@ -6,7 +6,7 @@ This project follows the Belmont principles of respect for persons, beneficence,
 
 ## Respect for persons and privacy
 
-The pipeline uses only the minimum fields needed for the stated analysis. ENDES case and household keys are used during the temporary join and removed from the processed CSV. Raw archives and generated files are stored through DVC in an access-controlled remote. The project will not attempt linkage to identifiable external data, publish small-cell tables that could increase disclosure risk, or share credentials.
+The pipeline uses only the minimum fields needed for the stated analysis. ENDES case and household keys are used during the temporary join and removed from the processed CSV. Original archives remain local in ignored storage, the processed CSV is represented by a DVC pointer, and generated code and output records are versioned in Git. The project will not attempt linkage to identifiable external data, publish small-cell tables that could increase disclosure risk, or share credentials.
 
 ## Beneficence and non-maleficence
 

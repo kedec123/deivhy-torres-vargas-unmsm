@@ -30,7 +30,7 @@ The author must read the final protocol, tables, code comments, and disclosure r
 
 ## Prompt-log location
 
-`ai_prompt_log/README.md` provides a blank record format for any assistance that requires disclosure. The repository intentionally does not contain fabricated retrospective entries. The author should add a dated record only when it accurately describes a real interaction and any required approval.
+The repository intentionally does not contain a retrospective prompt log or fabricated disclosure entries. If the course requires a detailed interaction record, the author should create it prospectively in the course-approved location and include only accurate dates, tools, and decisions.
 
 ## Decision table
 
