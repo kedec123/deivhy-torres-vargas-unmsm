@@ -74,6 +74,22 @@ If a Colab runtime reports dependency warnings after installation, use **Runtime
 
 The source manifest gives the direct INEI download URL and SHA-256 checksum for every archive. `quality_checks.md` verifies the eligibility population, no duplicated analysis IDs, the intended age range, positive weights, and the legacy-versus-updated 2024 measurement boundary.
 
+## Reproducibility safeguards
+
+| Risk | Project control | Evidence to inspect |
+|---|---|---|
+| Data substitution | Archive checksums, DVC pointers, and a locked data-build stage. | `data/metadata/source_manifest.csv`, `data/raw.dvc`, and `dvc.lock`. |
+| Identifier leakage | ENDES join keys are used only during construction and omitted from the analytical CSV. | `src/build_endes_dataset.py` and `data/metadata/analysis_population.md`. |
+| Preprocessing leakage | Imputation, scaling, and encoding are fitted inside the training pipeline after the split. | `src/train.py`. |
+| Unrecorded experiment choices | Five seeds, model names, metrics, data hash, and Git commit are logged in MLflow. | `src/run_experiments.py`, `mlruns.dvc`, and `docs/mlflow_runs.png`. |
+| Definition drift in 2024 | The legacy category is retained for the historical series; the updated 2024 field is separate. | `data/metadata/quality_checks.md` and `docs/analysis_report.md`. |
+
+The current internal experiment table records ten model-and-seed runs. It is useful for checking that the same pipeline executes under stated conditions. It is not an evaluation of clinical usefulness, a substitute for design-based public-health inference, or a model-selection contest for deployment.
+
+## Expected outcome files
+
+After a successful local reproduction, `05_pipeline/docs/` contains the weighted annual and residence tables, a trend figure, a plain-language analysis report, the ten-run experiment table, and an MLflow-run summary figure. `11_bias_audit/` contains a separate Adult Census benchmark audit and an ENDES subgroup diagnostic. The files are intentionally separated so that Adult Census fairness results are not misrepresented as ENDES results.
+
 ## Docker status
 
 The root `Dockerfile` and `docker-compose.yml` document the same Python 3.11 environment. Build from the repository root:

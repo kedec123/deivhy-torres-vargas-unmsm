@@ -31,3 +31,16 @@ The author must read the final protocol, tables, code comments, and disclosure r
 ## Prompt-log location
 
 `ai_prompt_log/README.md` provides a blank record format for any assistance that requires disclosure. The repository intentionally does not contain fabricated retrospective entries. The author should add a dated record only when it accurately describes a real interaction and any required approval.
+
+## Decision table
+
+| Activity | Default category | Required author action |
+|---|---|---|
+| Spell-checking, formatting, code explanation, or source discovery followed by original-source checking | Green | Keep control of the final wording and verify the record. |
+| Outline suggestions, code scaffolding, or a summary that influences a research decision | Amber when it goes beyond editing | Review critically, disclose it, and obtain any approval required by the course. |
+| Generating the author's reflection, peer review, source screening decision, dataset, result, or unverified citation | Red | Do not do it or submit it. |
+| Altering a number, method, citation, quote, or personal claim to make a document sound smoother | Red | Preserve the original evidence and revise only supported prose. |
+
+## Repository-specific disclosure check
+
+Before a final tag, the author should compare the actual work process with this policy and correct the disclosure if it is incomplete. A policy is useful only if it describes what happened, including uncomfortable boundary cases. If a course requirement conflicts with an earlier practice, the author should ask the instructor rather than relabel the practice after the fact.

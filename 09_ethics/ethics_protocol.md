@@ -41,3 +41,25 @@ This is an ethics protocol for a course-stage secondary analysis. It is not an i
 ## Accountability and review points
 
 The repository owner is responsible for checking source conditions, approving collaborator access, and documenting a material change in Git. Any collaborator who finds a data-quality, privacy, or interpretive concern should record it before results are redistributed. Before a thesis extension, public release, or submission to a journal, the author should check relevant UNMSM, CONCYTEC, and source-data requirements with the appropriate institutional office rather than assuming that this course protocol settles them.
+
+## Data and participant boundary
+
+The analysis begins after ENDES collection. It does not alter the original survey, seek new consent, or make contact with a respondent. The project will not claim to speak for survey participants, infer a family's behaviour from a coded variable, or contact a community because of an observed estimate. The author is responsible for respecting the conditions attached to the public-use data and for seeking institutional guidance if the use extends beyond this bounded course purpose.
+
+The analytical CSV is designed to be less identifying than the source modules, not to create a new open dataset. It removes join keys and excludes direct identifiers, but it still contains combinations of demographic, territorial, and survey variables. Sharing decisions must therefore consider disclosure risk, not merely the absence of names.
+
+## Ethical analysis checkpoints
+
+| Question before an action | Required response |
+|---|---|
+| Does the action add a direct identifier, coordinate, free text, or external individual-level linkage? | Stop and obtain a new governance assessment before proceeding. |
+| Does a planned chart or table show a small or potentially identifiable subgroup? | Aggregate, suppress, or do not publish until a disclosure review is documented. |
+| Does a result describe an association as a cause, a fault, or a ranking of people? | Rewrite the claim, state the design limit, and provide social context. |
+| Does a collaborator need the raw archive or a credential? | Grant the minimum necessary access and record the reason and duration. |
+| Does a proposed use involve diagnosis, triage, programme eligibility, or automated action? | Do not use this course model; require a separate clinical, legal, and ethical process. |
+
+## Justice in communication
+
+Justice applies to language as well as sampling. A higher observed prevalence in a department, rural area, or wealth category should be described as a population pattern within structural and service contexts. It should not be used to portray an area as inherently deficient or to decide that an individual deserves less attention. The repository will pair subgroup findings with the measurement and design limits that constrain interpretation.
+
+The protocol also recognises an evidence gap: a national survey cannot replace local knowledge, caregiving experience, or community participation. If the work later proposes an intervention or a locally targeted system, affected stakeholders must shape that next stage rather than being represented only as rows in a dataset.

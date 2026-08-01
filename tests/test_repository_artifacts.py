@@ -32,3 +32,29 @@ def test_source_manifest_covers_three_modules_per_year():
     assert len(manifest) == 18
     assert manifest.groupby("survey_year")["module"].nunique().eq(3).all()
     assert manifest["sha256"].str.fullmatch(r"[0-9a-f]{64}").all()
+
+
+def test_course_completion_structure_and_reproducibility_guards():
+    required_paths = [
+        "03_protocol/protocol_v2.0.md",
+        "03_protocol/pre_submission_checklist.md",
+        "03_protocol/target_venue_analysis.md",
+        "05_pipeline/Dockerfile",
+        "05_pipeline/data/README.md",
+        "05_pipeline/docs/environment.md",
+        "05_pipeline/docs/reproduction_checklist.md",
+        "06_repro_audit/reproducibility_audit.md",
+        "07_model_card/model_card.md",
+        "07_model_card/datasheet.md",
+        "09_ethics/ethics_protocol.md",
+        "10_data_mgmt/data_management_plan.md",
+        "11_bias_audit/bias_label_baseline.csv",
+        "12_integrity/ai_prompt_log/README.md",
+        "14_peer_review/peer_reviews/review_form_1.md",
+        "14_peer_review/peer_reviews/review_form_2.md",
+        "reflections/reflective_log.md",
+        "docker-compose.yml",
+    ]
+    assert all((ROOT / relative_path).exists() for relative_path in required_paths)
+    assert "always_changed" not in (ROOT / "dvc.yaml").read_text(encoding="utf-8")
+    assert "synthetic" not in (ROOT / "05_pipeline" / "README.md").read_text(encoding="utf-8").lower()

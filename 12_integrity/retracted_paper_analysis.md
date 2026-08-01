@@ -34,3 +34,13 @@ This distinction matters. A retraction is serious, but responsible integrity ana
 ## Repository response rule
 
 If a cited study, data source, or reported result used in this repository is corrected, withdrawn, or found to be erroneous, the author will create a dated issue or commit that identifies the affected artefact, revises the interpretation, regenerates any dependent output, and preserves the prior version in Git history. The aim is traceable correction rather than silent replacement.
+
+## How the record was assessed
+
+The analysis began with the publisher's retraction record, not with a social-media summary or an assumption based on the study topic. The article and notice were read for statements the publisher explicitly made, then separated from the broader conclusions that a responsible reader may draw about use of the article. The source record in `source_records.md` preserves the verification route and date.
+
+This method is intentionally narrow. It does not attempt to investigate the authors, reconstruct the disputed analysis, or reanalyse the underlying trials. Those activities would require evidence and authority that this repository does not have. The value of the exercise is learning to stop at the boundary of the available record while still acting appropriately on a retraction.
+
+## Practical questions for future citations
+
+Before relying on a health-research paper, the author should check whether the article has a correction, expression of concern, or retraction; inspect whether the claim being cited is still supported by the current record; and revise any dependent text if its evidentiary status changes. This is especially important when a study informs a protocol decision, a metric choice, or a clinical-policy statement.

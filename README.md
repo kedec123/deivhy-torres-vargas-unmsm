@@ -16,7 +16,7 @@ The project also documents the methodological and integrity work requested in th
 |---|---|
 | `01_paradigm/` | Quantitative paradigm justification and research question. |
 | `02_method/` | E.D.F.C.V. comparison of three candidate methods. |
-| `03_protocol/` | The short outline (`v0.1`) and the first full protocol draft (`v1.0`). |
+| `03_protocol/` | The short outline (`v0.1`), full first draft (`v1.0`), v2.0 response template, venue analysis, and pre-submission checklist. |
 | `04_literature/` | Search records, screening log, PRISMA flow, included studies, and gap analysis. |
 | `05_pipeline/` | Scripts, Colab notebook, compatibility files, results, environment record, and instructions for the ENDES workflow. |
 | `06_repro_audit/` to `12_integrity/` | Reproducibility, documentation, ethics, data stewardship, fairness, and integrity materials. |

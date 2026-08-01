@@ -86,9 +86,21 @@ def audit_metrics(y_true: pd.Series, y_pred: np.ndarray, sensitive: pd.Series) -
 def raw_label_audit(adult) -> tuple[pd.DataFrame, pd.DataFrame]:
     target = adult.target.astype(str).str.contains(">50K").astype(int)
     sensitive = adult.data["sex"].astype(str)
-    summary, groups = audit_metrics(target, target.to_numpy(), sensitive)
-    groups = groups.rename(columns={"selection_rate": "observed_favorable_rate"})
-    return pd.DataFrame([summary]), groups
+    groups = (
+        pd.DataFrame({"sex": sensitive, "favourable_label": target})
+        .groupby("sex", as_index=False)
+        .agg(sample_size=("favourable_label", "size"), observed_favourable_rate=("favourable_label", "mean"))
+    )
+    rates = groups["observed_favourable_rate"]
+    summary = pd.DataFrame(
+        [
+            {
+                "demographic_parity_difference": float(rates.max() - rates.min()),
+                "disparate_impact": float(rates.min() / rates.max()),
+            }
+        ]
+    )
+    return summary, groups
 
 
 def run_adult_audit(adult) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -137,6 +149,12 @@ def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame, label_summar
         equalized_odds_difference_min=("equalized_odds_difference", "min"),
         equalized_odds_difference_max=("equalized_odds_difference", "max"),
     )
+    group_summary = groups.groupby(["approach", "sex"], as_index=False).agg(
+        selection_rate_mean=("selection_rate", "mean"),
+        true_positive_rate_mean=("true_positive_rate", "mean"),
+        false_positive_rate_mean=("false_positive_rate", "mean"),
+        accuracy_mean=("accuracy", "mean"),
+    )
     lines = [
         "# Fairness Audit: Adult Census Benchmark",
         "",
@@ -158,7 +176,19 @@ def write_adult_report(results: pd.DataFrame, groups: pd.DataFrame, label_summar
         "",
         summary.to_markdown(index=False, floatfmt=".4f"),
         "",
+        "## Group metrics across fixed splits",
+        "",
+        group_summary.to_markdown(index=False, floatfmt=".4f"),
+        "",
         "The range of equalized-odds difference across seeds is reported to avoid relying on one convenient split. Mitigation can reduce one disparity measure while changing accuracy or other error patterns; the trade-off is part of the result, not a defect to hide.",
+        "",
+        "## Interpretation and limits",
+        "",
+        "The benchmark begins with a visible difference in favourable-label rates by recorded sex. In the five internal splits, the equalized-odds post-processing step reduced the reported demographic-parity and equalized-odds differences and moved disparate impact closer to 1. This is an empirical result for this benchmark and these splits, not a declaration that the resulting system is fair in every relevant sense.",
+        "",
+        "The mitigation changes decision thresholds after fitting the baseline model. It does not change the historical processes that produced the Adult Census labels, prove that sex is the only relevant protected attribute, or resolve potential differences by intersecting characteristics. Fairness criteria can conflict, and the preferred trade-off depends on the real decision context. The course exercise therefore documents the choice and its consequences instead of presenting mitigation as a universal fix.",
+        "",
+        "The ENDES subgroup check is deliberately separate. It uses the project model only to inspect one internal holdout by child sex and residence; it does not import an Adult Census mitigation rule into Peru or support individual-level decisions.",
         "",
         "## Files",
         "",

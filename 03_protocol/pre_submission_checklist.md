@@ -21,6 +21,6 @@ Mark each item only after checking the current repository state. A checkmark is 
 | 15 | Reproducibility audit includes criteria, evidence, and an overall score. | Complete |
 | 16 | Model card and datasheet match the implemented artefact. | Complete |
 | 17 | Ethics and data plans address privacy, stigma, access, FAIR, and retention. | Complete |
-| 18 | Bias audit has a documented before/after mitigation result. | Complete after script rerun |
+| 18 | Bias audit has a documented before/after mitigation result. | Complete |
 | 19 | Retraction analysis and AI policy distinguish evidence from inference. | Complete |
 | 20 | Instructor collaboration, authentic peer reviews, reflection, release tag, and course-platform confirmation are complete. | Pending instructor and author actions |
