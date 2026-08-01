@@ -1,72 +1,52 @@
-# UNMSM Research Methods - Deivhy Torres
+# Child Anemia in Peru: ENDES 2019-2024
 
-Doctoral course repository for *Research Methods and Scientific Integrity in AI and Advanced Technologies* at UNMSM.
+**Author:** Deivhy Torres Vargas<br>
+**Course:** Research Methods and Scientific Integrity in AI and Advanced Technologies, UNMSM<br>
+**Study focus:** Trends and factors associated with anemia among children aged 6-35 months in Peru.
 
-**Author:** Deivhy Torres  
-**Current research topic:** Child anemia in Peru, with emphasis on children aged 6 to 35 months and national inequalities during 2019-2024.
+## Project in one paragraph
 
-## What this repository covers
+This repository develops a reproducible secondary analysis of anonymized ENDES microdata. The main study asks how legacy-comparable anemia prevalence changed between 2019 and 2024 and how it was distributed by child, maternal, household, and territorial characteristics. It is a population-level descriptive and associative study, not a causal evaluation or a clinical prediction system.
 
-This repository currently documents the first five sessions of the course. It is organized as a partial but coherent project: the paradigm is defined first, the method is justified second, the first protocol outline follows from those choices, the literature review frames the gap, and the technical artifact shows how a reproducible analysis pipeline can be built.
+The project also documents the methodological and integrity work requested in the course: a paradigm statement, a method choice, protocol versions, an auditable literature review, a reproducible data pipeline, an ethics and data-management plan, a model card, and a separate fairness exercise. The folders follow the course sequence so the research argument can be read from beginning to end.
 
-At this stage, the repository should be read as a **sessions 1-5 submission**, not as the final full-course repository. Later units such as ethics, data management, bias auditing, peer review, and the final protocol versions are still pending.
+## Repository map
 
-## Current structure
+| Folder | Purpose |
+|---|---|
+| `01_paradigm/` | Quantitative paradigm justification and research question. |
+| `02_method/` | E.D.F.C.V. comparison of three candidate methods. |
+| `03_protocol/` | The short outline (`v0.1`) and the first full protocol draft (`v1.0`). |
+| `04_literature/` | Search records, screening log, PRISMA flow, included studies, and gap analysis. |
+| `05_pipeline/` | Scripts, Colab notebook, results, and instructions for the ENDES workflow. |
+| `06_repro_audit/` to `12_integrity/` | Reproducibility, documentation, ethics, data stewardship, fairness, and integrity materials. |
+| `14_peer_review/` and `reflections/` | Templates that must be completed with real peer feedback and the author's own reflection. |
+| `data/` | Data contract and DVC-managed ENDES source archives and processed analytical CSV. |
 
-- `01_paradigm/` - paradigm justification for the child anemia topic
-- `02_method/` - research question refinement and method-fit matrix
-- `03_protocol/` - protocol outline v0.1
-- `04_literature/` - mini systematic review, PRISMA diagram, and gap analysis
-- `05_pipeline/` - reproducible baseline pipeline using Git, DVC, MLflow, and Docker
+## Data and reproducibility
 
-## How to read the project
+The analysis-ready file is `data/processed/endes_anemia_children_2019_2024.csv`. It contains one de-identified row for every eligible child aged 6-35 months in the official ENDES modules for 2019-2024. Original archives and the processed CSV are managed with DVC; Git stores their metadata, code, and DVC lock information rather than the data files themselves.
 
-If you want the research logic, start with `01_paradigm/` and move in order to `04_literature/`. Each folder represents one step in the course sequence.
+The DVC remote is a shared Google Drive folder. No credentials are committed. Because Google can block DVC's shared OAuth client, the documented project route is a local service-account configuration; see [`data/DVC_ACCESS.md`](data/DVC_ACCESS.md). The source manifest, data dictionary, population definition, and build checks are in `data/metadata/`.
 
-If you want the technical artifact, go directly to `05_pipeline/README.md`. The reproducibility stack is intentionally self-contained there, even though the final course brief also shows a wider repository layout for later sessions.
+## Reproduce the technical workflow
 
-## Quick access
+Python 3.11 is the reference environment. Google Colab is the recommended classroom route; open [`05_pipeline/notebook.ipynb`](05_pipeline/notebook.ipynb) and run it from the beginning after requesting access to the DVC Drive folder.
 
-- Research deliverables: `01_paradigm/` to `04_literature/`
-- Technical artifact: `05_pipeline/`
-- Colab notebook: `05_pipeline/notebook.ipynb`
-- Saved experiment summary: `05_pipeline/docs/experiment_results.csv`
+For local work on Windows:
 
-## How to reproduce the current technical artifact
+```powershell
+uv venv --python 3.11 .venv
+uv pip install --python .venv -r requirements.txt
+.\.venv\Scripts\dvc pull
+.\.venv\Scripts\dvc repro
+.\.venv\Scripts\mlflow ui --backend-store-uri .\mlruns
+```
 
-The easiest path is Google Colab:
+The final command opens the local MLflow interface at `http://127.0.0.1:5000`. Full commands, expected outputs, and the Docker limitation are documented in [`05_pipeline/README.md`](05_pipeline/README.md).
 
-1. Open `05_pipeline/notebook.ipynb` from GitHub or through the Colab link inside `05_pipeline/README.md`.
-2. Run the notebook from top to bottom.
-3. Use the executed notebook, the saved CSV summary, and the committed `mlruns/` folder as technical evidence for Session 5.
+## Scope and responsible use
 
-If you prefer local execution, the exact steps are documented in `05_pipeline/README.md`.
+The primary outcome uses the legacy ENDES anemia category (`HW57`) across all six years to keep the historical series internally comparable. ENDES 2024 also includes new fields aligned with the updated guideline; those are retained only for a sensitivity check and are not mixed into the primary trend. Therefore, the repository does not present its legacy 2024 estimate as the current official national figure.
 
-## Technical status
-
-The pipeline is centered on a small synthetic ENDES-like dataset created only for reproducibility practice. It does **not** claim to be the final analytical dataset for the research project. The current artifact demonstrates versioning, experiment tracking, and environment documentation, while the substantive doctoral work remains focused on the protocol and literature components.
-
-The main teaching environment for the technical artifact is now **Google Colab**, which matches the way the work was developed in class. Local execution remains documented as an alternative path, but Colab is the easiest route to show how the notebook and results were actually produced.
-
-Docker instructions are included because they are required by the course brief. However, Docker was **not** validated locally in the present environment because Docker is not installed on this machine. That limitation is documented rather than hidden.
-
-## What is still pending for the final course brief
-
-- later-session folders and deliverables beyond Session 5
-- a final DVC remote setup tested from a fresh external clone
-- later protocol versions (`v1.0` and `v2.0`)
-- ethics, data management, bias, integrity, and reflective writing materials
-
-## Current completion status
-
-For the current sessions 1-5 scope, the repository already includes:
-
-- paradigm justification
-- method-fit matrix
-- protocol outline v0.1
-- mini systematic review with PRISMA diagram and gap analysis
-- reproducible baseline pipeline with notebook, DVC, MLflow outputs, and experiment summary
-
-## Integrity note
-
-The methodological documents in `01` to `04` are working academic drafts. They should be treated as materials to be personally reviewed, refined, and defended by the author before final course submission.
+The model is an exploratory learning exercise. It must not be used for diagnosis, triage, eligibility decisions, or ranking children, households, departments, or communities. Before submission, the author must complete the remaining real peer reviews and reflective log, add the instructor as a repository collaborator using the account provided in class, verify DVC access from a clean clone, and create the final tag.

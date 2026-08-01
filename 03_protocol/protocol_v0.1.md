@@ -1,41 +1,41 @@
-# Research Protocol Outline (v0.1)
+# Protocol Outline (v0.1)
 
-## 1. Working Title
+## 1. Working title
 
-Persistence of Child Anemia in Peru: Inequality Patterns Among Children Aged 6 to 35 Months, 2019-2024.
+**Child anemia in Peru, 2019-2024: trends and associated inequalities among children aged 6-35 months.**
 
-## 2. Problem and Context
+## 2. Problem statement
 
-Child anemia remains high in Peru despite years of public action, and the burden is still concentrated in poorer, rural, and territorially disadvantaged populations. The project focuses on the 2019-2024 period because it offers a recent national window that is directly relevant to current policy debate.
+Child anemia remains a public-health concern in Peru, yet national summaries can obscure differences by household conditions and territory. The 2024 update to anemia measurement also means that recent figures need a careful comparability strategy.
 
 ## 3. Rationale
 
-The study matters because anemia in early childhood affects development and because national policy still needs clearer evidence on where persistence is concentrated. A stronger analytical baseline can help move the discussion from generic concern to better targeting.
+A transparent analysis of recent ENDES data can show where the burden remains concentrated and can document how the measurement transition affects interpretation. The purpose is to inform discussion, not to rate departments or evaluate clinical care.
 
-## 4. General Research Question
+## 4. General question
 
-How did anemia among Peruvian children aged 6 to 35 months evolve between 2019 and 2024, and which maternal, household, and territorial factors were most strongly associated with its persistence?
+How did legacy-comparable anemia prevalence among Peruvian children aged 6-35 months change from 2019 to 2024, and which observed characteristics were associated with anemia in pooled ENDES data?
 
-## 5. Specific Questions and Working Hypothesis
+## 5. Objectives and hypothesis
 
-The study asks how prevalence changed over time, how it differs across key social and territorial groups, and which variables remain most strongly associated with anemia in the pooled dataset. The working hypothesis is that persistence is more closely linked to structural inequality than to isolated individual factors.
+The study will describe weighted annual prevalence, compare selected subgroups, and estimate adjusted associations. It expects higher prevalence to remain patterned by age, socioeconomic position, residence, and territory, while treating that expectation as an association to test rather than a causal claim.
 
-## 6. Research Paradigm
+## 6. Paradigm
 
-The study adopts a quantitative empirical paradigm because the immediate objective is to measure trends, compare groups, and model associations using standardized survey data. This is a better fit than interpretivist or design-oriented approaches for the present phase.
+The project uses a quantitative empirical paradigm because its immediate task is to estimate population patterns with standardized repeated survey data. Qualitative and computational approaches may complement later work but are not the primary design.
 
-## 7. Study Design and Data Source
+## 7. Design and source
 
-The proposed design is a repeated cross-sectional secondary analysis using ENDES microdata from 2019 to 2024. The population of interest is children aged 6 to 35 months in Peru, using the harmonized national series as the starting analytical frame.
+This is a repeated cross-sectional secondary analysis of anonymous ENDES modules from 2019-2024. The analytical population is children aged 6-35 months with a valid legacy anemia category after the relevant modules are joined.
 
-## 8. Main Variables
+## 8. Variables
 
-The outcome variable is child anemia status based on hemoglobin measurement. The main explanatory variables include child age, sex, recent iron supplementation, maternal education, household wealth, area of residence, region, and other relevant territorial or household indicators available in ENDES.
+The primary outcome is a binary legacy-comparable anemia indicator derived from `HW57`. Core explanatory variables are age, child sex, maternal education, wealth quintile, urban-rural residence, department, and available design variables; the 2024 updated anemia field is used only for sensitivity discussion.
 
-## 9. Analysis Plan
+## 9. Analysis plan
 
-The analysis will begin with descriptive national trends and subgroup comparisons, then move to multivariable modeling to estimate which factors are most strongly associated with anemia. Survey design features and comparability checks will be incorporated so that the results remain methodologically defensible.
+The analysis will produce weighted descriptive trends and subgroup comparisons, followed by regression-based association models with transparent preprocessing. It will document missing data, comparability decisions, and the limits of using survey associations.
 
-## 10. Ethics, Limitations, and Timeline
+## 10. Ethics, limits, and timeline
 
-The project uses anonymized secondary data, so direct participant risk is low, but reporting must avoid stigmatizing high-burden territories or overstating causality. A preliminary 36-month timeline is envisioned, beginning with documentation and harmonization, moving through analysis and writing, and ending with manuscript and thesis integration.
+The data are anonymous, but reporting must avoid territorial stigma and unsupported causal statements. Months 1-4 cover protocol, literature, data documentation, and analysis; months 5-8 cover model checking, writing, feedback, and revision.

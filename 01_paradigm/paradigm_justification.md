@@ -1,31 +1,29 @@
-# Paradigm Justification Statement
+# Paradigm Justification
 
-## 1. Research Topic and Context
+## 1. Topic and context
 
-Child anemia is still one of the most stubborn public health problems in Peru, especially among children aged 6 to 35 months. The most recent ENDES series shows that the problem did not disappear after years of public attention; it remained high and unevenly distributed, with a heavier burden in rural areas and in departments such as Puno and Loreto. That pattern matters because anemia in early childhood is not just a nutrition indicator. It is also tied to inequality, access to prevention, maternal education, and territorial disadvantage.
+My tentative topic is child anemia in Peru among children aged 6-35 months. I will examine the 2019-2024 ENDES series because it gives a recent national view while also making an important measurement issue visible: the 2024 survey contains fields linked to the updated anemia guidance. The project will keep a legacy-comparable series for trend analysis and discuss the 2024 change separately rather than treating two definitions as interchangeable.
 
-My tentative topic is the persistence of child anemia in Peru between 2019 and 2024. I am focusing on this period because ENDES 2024 already reports a harmonized national series under the updated guideline, which makes it a more defensible window than mixing older and newer definitions without checking comparability.
+The practical question is not simply whether anemia exists. It is how the burden is distributed and whether familiar inequalities remain visible by age, sex, maternal education, household wealth, residence, and department. That is relevant to public health planning because a national average can conceal very different local situations.
 
-## 2. Preliminary Research Question
+## 2. Preliminary research question
 
-How did anemia among Peruvian children aged 6 to 35 months evolve between 2019 and 2024, and which maternal, household, and territorial factors were most strongly associated with its persistence?
+How did legacy-comparable anemia prevalence among Peruvian children aged 6-35 months change between 2019 and 2024, and which child, maternal, household, and territorial characteristics were associated with anemia in the pooled ENDES data?
 
-## 3. Chosen Paradigm and Justification
+## 3. Chosen paradigm
 
-The most appropriate starting point for this study is a **quantitative empirical (positivist) paradigm**. The reason is straightforward: the core problem is being framed as a measurable population-level condition. I need to describe national trends, compare subgroups, and estimate associations using standardized survey data. The first task is not to interpret meanings or experiences, but to produce reliable evidence about magnitude, distribution, and patterned inequality.
+The study is grounded in a **quantitative empirical paradigm**. Its central claims concern measurable population patterns: prevalence, change over time, differences between subgroups, and statistical associations. ENDES provides standardized, repeated survey measurements that can support those questions when its design and measurement limits are respected.
 
-I am **not** choosing an interpretivist paradigm as the main frame because interviews or qualitative accounts, while potentially valuable later, would not answer the immediate question about national prevalence and associated factors. They could explain why some interventions fail in practice, but they cannot replace the need for a quantitative baseline.
+An interpretivist approach would be valuable for understanding caregivers' experiences or the everyday barriers to prevention. It is not the main approach here because it cannot estimate national patterns from a representative survey. A computational paradigm is also secondary. The project includes a small reproducibility exercise with predictive models, but prediction is not the research question and will not determine the substantive conclusions.
 
-I am also **not** choosing a computational or design-oriented paradigm as the primary one. A predictive model could be useful in a later stage, but building one before clarifying the descriptive and analytical landscape would put the technical tool ahead of the research logic. For this topic, the first responsibility is to understand the population pattern before attempting prediction.
+I am not calling this a mixed-methods study at this stage. Doing so would imply planned integration of qualitative and quantitative evidence that the present design does not yet contain. The honest starting point is a bounded quantitative analysis, with qualitative work as a possible later extension.
 
-I am likewise **not** using mixed methods as the central framing for this phase. Mixed methods would make sense if the study were already designed to integrate national trend analysis with interviews, fieldwork, or implementation evidence. At the moment, the question remains mainly quantitative, and forcing a mixed label too early would make the design sound broader than it really is.
+## 4. Consequences for the study
 
-## 4. Implications of the Paradigm Choice
+This choice leads to a repeated cross-sectional secondary analysis of ENDES 2019-2024. The work will use weighted descriptive summaries and association models, report the survey-design variables available in the data, and separate what the data can describe from what it cannot establish. A later intervention study would need a different design and a credible causal identification strategy.
 
-The paradigm choice points clearly toward repeated cross-sectional quantitative data, mainly from ENDES 2019-2024. It also points toward methods such as descriptive trend analysis, subgroup comparison, and regression-based modeling to identify which variables are most strongly associated with anemia.
+The intended contribution is a transparent recent baseline for public-health discussion. It should clarify distribution and association, not assign blame to families or territories and not claim that a measured characteristic causes anemia.
 
-The expected contribution is practical as well as academic. A careful national analysis can clarify where the burden remains concentrated and which structural inequalities seem most closely linked to persistence. The natural academic home for this work is public health, epidemiology, child nutrition, and health policy.
+## 5. Tension to manage
 
-## 5. One Doubt or Tension
-
-The main tension is comparability across years. Peru updated its operational guideline in 2024, including changes related to altitude adjustment and age-specific interpretation. That means I cannot simply place all yearly estimates side by side without checking whether they are truly comparable at the microdata level. The safest route is to rely on the harmonized ENDES 2019-2024 series and then verify, very carefully, whether the same logic can be preserved in the deeper statistical analysis.
+The central tension is comparability. The 2024 measurement update can change estimated prevalence even when the underlying health situation has not changed by the same amount. For that reason, the primary series uses the legacy ENDES category in all years, while the updated 2024 field is retained for sensitivity analysis. This is a methodological safeguard, not a claim that one definition is universally superior.
