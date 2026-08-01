@@ -23,6 +23,12 @@ The analytical file contains one de-identified row per eligible child aged 6-35 
 
 The primary outcome is the legacy ENDES anemia category (`HW57`) so that the 2019-2024 series uses one internally consistent definition. The newer 2024 fields are retained only for a sensitivity discussion. No result in this repository should be read as the current official prevalence figure under the revised 2024 definition.
 
+## Versioned data and experiment records
+
+The dataset is represented in Git by `data/endes_anemia_children_2019_2024.csv.dvc`. This small DVC file records the checksum, size, and expected name of the real CSV; `dvc pull` retrieves the de-identified file when the remote is available. This is the same versioning pattern used by the reference project, whose `rabies_data.csv.dvc` points to its dataset. Keeping the analytical CSV outside ordinary Git avoids duplicating a data file in the code history.
+
+The repository includes ten completed exploratory MLflow runs: two models evaluated with each of five fixed seeds. Their parameters, metrics, and provenance tags are stored in `mlruns/`, alongside the experiment metadata, and `docs/experiment_results.csv` provides a compact tabular summary. The tracking store belongs at the pipeline root rather than in `src/`; `src/` contains executable source code only. Run `mlflow ui --backend-store-uri .\\mlruns` from this folder to inspect the records in a browser.
+
 ## Run locally
 
 Use Python 3.11. From this folder:
