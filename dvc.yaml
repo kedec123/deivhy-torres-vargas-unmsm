@@ -1,0 +1,27 @@
+stages:
+  build_endes:
+    cmd: python 05_pipeline/src/build_endes_dataset.py
+    deps:
+      - 05_pipeline/src/build_endes_dataset.py
+      - data/raw
+    params:
+      - data
+    outs:
+      - data/processed/endes_anemia_children_2019_2024.csv
+  analyze_endes:
+    cmd: python 05_pipeline/src/analyze_endes.py
+    deps:
+      - 05_pipeline/src/analyze_endes.py
+      - data/processed/endes_anemia_children_2019_2024.csv
+    params:
+      - analysis
+    always_changed: true
+  experiments:
+    cmd: python 05_pipeline/src/run_experiments.py
+    deps:
+      - 05_pipeline/src/train.py
+      - 05_pipeline/src/run_experiments.py
+      - data/processed/endes_anemia_children_2019_2024.csv
+    params:
+      - experiments
+    always_changed: true

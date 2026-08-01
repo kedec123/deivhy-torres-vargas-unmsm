@@ -21,3 +21,7 @@ Thumbs.db
 
 # DVC local cache
 .dvc/cache/
+/mlruns
+
+# Regenerated row-level diagnostic output; never publish in Git.
+/05_pipeline/docs/latest_test_predictions.csv

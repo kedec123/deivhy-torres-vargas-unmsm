@@ -1,0 +1,18 @@
+variable,definition,type,source,years_available,analytic_role
+analysis_id,Project-generated non-identifying row label.,string,Generated,2019-2024,Audit and reproducibility only
+survey_year,ENDES collection year.,integer,Generated,2019-2024,Trend
+age_months,Child age in completed months.,numeric,REC44.HW1,2019-2024,Eligibility and predictor
+hemoglobin_g_dl,Observed child hemoglobin value recorded by ENDES.,numeric,REC44.HW53,2019-2024,Descriptive only
+hemoglobin_adjusted_legacy_g_dl,Altitude-adjusted hemoglobin under the legacy ENDES field.,numeric,REC44.HW56,2019-2024,Comparability check
+hemoglobin_adjusted_new_2024_g_dl,2024 field aligned with the updated national definition.,numeric,REC44.HW56A,2024,Sensitivity check
+anemia_legacy_level,"Legacy ENDES anemia category: 1-3 anemia, 4 no anemia.",integer,REC44.HW57,2019-2024,Outcome derivation
+anemia_new_2024_level,"2024 updated anemia category, retained for sensitivity analysis.",integer,REC44.HW57A,2024,Sensitivity only
+anemia_legacy,"Binary legacy-comparable anemia outcome: 1 if category 1-3, 0 if category 4.",integer,Derived from HW57,2019-2024,Primary outcome
+child_sex_code,ENDES child sex code.,integer,REC21.B4,2019-2024,Predictor and subgroup
+mother_education_code,ENDES maternal education code.,integer,REC0111.V106,2019-2024,Predictor
+wealth_quintile,ENDES household wealth quintile code.,integer,REC0111.V190,2019-2024,Predictor
+department_code,ENDES department code used for the departmental domain.,string,REC0111.V024,2019-2024,Predictor and subgroup
+residence_code,ENDES urban-rural residence code.,integer,REC0111.V025,2019-2024,Predictor and subgroup
+survey_weight,"Normalized individual sampling weight (V005 divided by 1,000,000).",numeric,REC0111.V005,2019-2024,Weighted descriptive estimates
+cluster_code,Primary sampling unit code.,integer,REC0111.V021,2019-2024,Design documentation
+stratum_code,Sampling stratum code; V022 with V023 fallback.,integer,REC0111.V022/V023,2019-2024,Design documentation

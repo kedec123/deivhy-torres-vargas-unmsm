@@ -1,129 +1,77 @@
-# Child Anemia Peru - Reproducible Baseline Pipeline
+# Reproducible ENDES Pipeline
 
-Reproducible baseline pipeline for the child anemia project in Peru.
+This folder contains the technical component of the child anemia study. It builds a de-identified analytical CSV from official ENDES 2019-2024 modules, produces weighted descriptive summaries, and runs small exploratory classification experiments. The models are for reproducibility practice only. They are not clinical tools and must not be used to diagnose, triage, or make decisions about children, families, or territories.
 
-**Author:** Deivhy Torres  
-**Course:** Research Methods and Scientific Integrity in AI and Advanced Technologies - UNMSM
+## What each file does
 
-## Purpose of this folder
+| Path | Role |
+|---|---|
+| `src/build_endes_dataset.py` | Reads untouched ENDES archives from `data/raw/`, joins modules, removes direct survey identifiers, and builds the processed CSV. |
+| `src/analyze_endes.py` | Produces weighted annual and residence summaries plus a trend figure. |
+| `src/train.py` | Defines leakage-aware preprocessing and two exploratory models. |
+| `src/run_experiments.py` | Runs five fixed seeds for logistic regression and random forest and logs parameters, metrics, data hash, and Git commit in MLflow. |
+| `notebook.ipynb` | Colab-oriented walkthrough of the same workflow. |
+| `docs/` | Human-readable analysis results and experiment table generated from the real CSV. |
 
-This folder is the Session 5 technical artifact. It demonstrates the reproducibility stack required by the course using a small **synthetic ENDES-like dataset** rather than real ENDES microdata.
+## Reference environment
 
-Its job is modest but important: show that the project can track data, record experiments, document the environment, and be rerun in a clean, explicit workflow.
+Use Python **3.11**. The pinned dependencies are at the repository root in `requirements.txt`; `Dockerfile` uses the same Python version.
 
-## Recommended environment
-
-The recommended environment for this artifact is **Google Colab**, because that is the classroom workflow used in the course. Local execution is still possible and documented below, but Colab is the main presentation path for this repository.
-
-Open the notebook directly in Colab:
-
-[Open in Colab](https://colab.research.google.com/github/kedec123/deivhy-torres-vargas-unmsm/blob/main/05_pipeline/notebook.ipynb)
-
-## What is included
-
-- `data/create_dataset.py` - creates the synthetic dataset
-- `data/anemia_peru_synthetic.csv.dvc` - DVC pointer for the tracked dataset
-- `src/train.py` - runs one baseline experiment
-- `src/run_experiments.py` - runs the multi-seed experiment set and logs results
-- `docs/experiment_results.csv` - saved experiment summary
-- `notebook.ipynb` - Colab-friendly notebook for setup, inspection, and demonstration
-- `mlruns/` - MLflow tracking output already generated for the current baseline
-- `Dockerfile` - environment description for container-based reproduction
-
-## Important limitation
-
-`data/anemia_peru_synthetic.csv` is a synthetic teaching dataset. It is useful for reproducibility practice only. It must not be treated as evidence about real anemia prevalence in Peru.
-
-## Google Colab workflow
-
-This is the simplest way to show the Session 5 artifact in class or in a review:
-
-1. Open `05_pipeline/notebook.ipynb` from GitHub or by using the Colab link above.
-2. Run the setup cells that clone the repository and install dependencies.
-3. Move into the `05_pipeline/` folder inside the Colab runtime.
-4. Run the notebook cells that inspect the synthetic dataset and saved experiment results.
-5. If needed, run the training script or the multi-seed experiment script from within the notebook.
-
-If Colab shows a warning about preinstalled packages after installation, restart the runtime once and run the notebook again from the top.
-
-If you want visible evidence for the deliverable, Colab execution can be shown through:
-
-- saved notebook outputs,
-- `docs/experiment_results.csv`,
-- the `mlruns/` folder already committed in the repository,
-- optional screenshots from the MLflow UI.
-
-## How to add a notebook to this folder
-
-If you create or update a notebook in Colab, use **File -> Save a copy in GitHub** and select this repository plus the path `05_pipeline/notebook.ipynb`. If GitHub save is not available, download the notebook as `.ipynb` and place it in this same folder before committing and pushing.
-
-## Local reproduction workflow
-
-Recommended on Windows: use Python 3.12.
-
-1. Create the environment
-
-```bash
-uv venv --python 3.12 .venv
-```
-
-2. Install dependencies
-
-```bash
+```powershell
+uv venv --python 3.11 .venv
 uv pip install --python .venv -r requirements.txt
 ```
 
-3. Recover or regenerate the dataset
+## Reproduce locally
 
-If the dataset is already available locally, you can keep it as is. If you want to regenerate the synthetic file from scratch:
+1. Follow [`data/DVC_ACCESS.md`](../data/DVC_ACCESS.md) to configure a local service account with access to the shared Google Drive folder. Do not put a Google token or a credential file in Git.
 
-```bash
-.\.venv\Scripts\python data/create_dataset.py
-```
+2. Retrieve the source archives and analytical output.
 
-If you prefer to pull the tracked artifact through DVC after configuring authentication:
-
-```bash
+```powershell
 .\.venv\Scripts\dvc pull
 ```
 
-4. Run one baseline model training
+3. Reproduce the pipeline. Activate the environment first so `dvc repro` uses its Python interpreter.
 
-```bash
-.\.venv\Scripts\python src/train.py --seed 42
+```powershell
+.\.venv\Scripts\Activate.ps1
+dvc repro
 ```
 
-5. Run the full experiment set and generate MLflow runs
+This rebuilds `data/processed/endes_anemia_children_2019_2024.csv`, updates the data metadata, writes descriptive outputs in `05_pipeline/docs/`, and reruns the fixed-seed experiments.
 
-```bash
-.\.venv\Scripts\python src/run_experiments.py
+4. Inspect the results.
+
+```powershell
+Get-Content .\05_pipeline\docs\analysis_report.md
+Get-Content .\05_pipeline\docs\experiment_results.csv
 ```
 
-6. Open the MLflow UI
+5. Open MLflow.
 
-```bash
-.\.venv\Scripts\mlflow ui --backend-store-uri .\mlruns
+```powershell
+mlflow ui --backend-store-uri .\mlruns
 ```
 
-Then open `http://127.0.0.1:5000`.
+Then open `http://127.0.0.1:5000` in a browser.
 
-## DVC configuration
+## Google Colab route
 
-This project is prepared to use **Google Drive** as the DVC remote target. The current remote points to a personal Google Drive path so the owner can authenticate and push or pull data from the same account.
+Open the notebook from the repository's `main` branch:
 
-Before final course submission to an external reviewer, this should be upgraded to a **shared Google Drive folder ID**, because that is more appropriate for multi-user access than a personal `root` path.
+[Open in Colab](https://colab.research.google.com/github/kedec123/deivhy-torres-vargas-unmsm/blob/main/05_pipeline/notebook.ipynb)
 
-If authentication is needed for the first time, DVC will prompt for browser-based authorization. Credentials should stay local and must not be committed.
+Run each cell in order. The notebook clones the repository, installs the same root requirements, asks DVC to retrieve data, validates the CSV, runs the descriptive script and experiments, and shows the saved result tables. The first DVC request may open a Google sign-in flow. Use an account that has access to the project's shared Drive folder.
 
-## Current baseline
+If a Colab runtime reports dependency warnings after installation, use **Runtime -> Restart session**, then run the notebook from the beginning. Do not skip the data-retrieval and validation cells; otherwise variables loaded by earlier cells will be missing.
 
-The current baseline uses two simple models:
+## DVC and MLflow evidence
 
-- logistic regression
-- random forest
+`dvc.yaml` records the build, analysis, and experiment commands. `dvc.lock` records the exact data dependency state. The DVC remote URL is an access-controlled Google Drive folder ID in `.dvc/config`; authentication is local to each user. `mlruns/` is the canonical local MLflow store and is also DVC-managed because it contains generated tracking artifacts.
 
-The current saved run summary covers 5 seeds (`13, 21, 42, 87, 100`) and is stored in `docs/experiment_results.csv`.
+The source manifest gives the direct INEI download URL and SHA-256 checksum for every archive. `quality_checks.md` verifies the eligibility population, no duplicated analysis IDs, the intended age range, positive weights, and the legacy-versus-updated 2024 measurement boundary.
 
-## Docker note
+## Docker status
 
-The Dockerfile is included to meet the course reproducibility requirements and to document the intended environment. In this machine, Docker could not be validated locally because Docker is not installed, so container execution remains a documented path rather than a verified one.
+The root `Dockerfile` documents the same Python 3.11 environment and defaults to the descriptive analysis command. It has been reviewed for consistency with the repository dependencies. Docker is not available in the current workstation environment, so a container run must still be verified on a machine with Docker before final submission. This limitation is stated openly rather than treated as a completed test.
