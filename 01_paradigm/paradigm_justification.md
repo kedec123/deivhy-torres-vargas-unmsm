@@ -1,4 +1,6 @@
-# Paradigm Justification
+# Child Anemia in Peru
+
+*Paradigm Justification*
 
 ## 1. Topic and context
 

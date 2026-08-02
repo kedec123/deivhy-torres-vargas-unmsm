@@ -1,4 +1,4 @@
-# Child Anemia in Peru: ENDES 2019-2024
+# Child Anemia in Peru
 
 Doctoral course project for *Research Methods and Scientific Integrity in AI and Advanced Technologies* at UNMSM.
 
