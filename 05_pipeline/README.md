@@ -9,6 +9,7 @@ This folder contains the technical component of the child-anemia study. It build
 | `.dvc/` | DVC configuration. The remote identifier is public; credentials remain local. |
 | `data/create_dataset.py` | Builds the analytical CSV from untouched ENDES source archives. |
 | `data/endes_anemia_children_2019_2024.csv.dvc` | DVC pointer to the de-identified analytical CSV. |
+| `data/endes_anemia_children_2019_2024_sample.csv` | Public 300-row inspection sample; it is not used for analysis or model training. |
 | `data/raw/` | Local ENDES archives. This directory is never committed to Git. |
 | `src/analyze_endes.py` | Creates weighted descriptive tables, a trend figure, and a plain-language report. |
 | `src/train.py` | Defines leakage-aware preprocessing and the exploratory models. |
@@ -26,6 +27,10 @@ The primary outcome is the legacy ENDES anemia category (`HW57`) so that the 201
 ## Versioned data and experiment records
 
 The dataset is represented in Git by `data/endes_anemia_children_2019_2024.csv.dvc`. This small DVC file records the checksum, size, and expected name of the real CSV; `dvc pull` retrieves the de-identified file when the remote is available. This is the same versioning pattern used by the reference project, whose `rabies_data.csv.dvc` points to its dataset. Keeping the analytical CSV outside ordinary Git avoids duplicating a data file in the code history.
+
+## Public inspection sample
+
+[`data/endes_anemia_children_2019_2024_sample.csv`](data/endes_anemia_children_2019_2024_sample.csv) is a 300-row public inspection sample. It contains 50 deterministically selected records from each survey year and excludes the project row label, cluster code, and stratum code. It is included so a reader can inspect the CSV structure directly in GitHub. It is not representative, it must not be used for prevalence estimates or model training, and it does not replace the full analytical dataset.
 
 The repository includes ten completed exploratory MLflow runs: two models evaluated with each of five fixed seeds. Their parameters, metrics, and provenance tags are stored in `mlruns/`, alongside the experiment metadata, and `docs/experiment_results.csv` provides a compact tabular summary. The tracking store belongs at the pipeline root rather than in `src/`; `src/` contains executable source code only. Run `mlflow ui --backend-store-uri .\\mlruns` from this folder to inspect the records in a browser.
 

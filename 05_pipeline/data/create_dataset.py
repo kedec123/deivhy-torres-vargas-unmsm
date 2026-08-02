@@ -25,6 +25,9 @@ DATA_DIR = Path(__file__).resolve().parent
 RAW_DIR = DATA_DIR / "raw"
 METADATA_DIR = ROOT / "docs"
 OUTPUT_PATH = DATA_DIR / "endes_anemia_children_2019_2024.csv"
+PUBLIC_SAMPLE_PATH = DATA_DIR / "endes_anemia_children_2019_2024_sample.csv"
+PUBLIC_SAMPLE_ROWS_PER_YEAR = 50
+PUBLIC_SAMPLE_SEED = 2026
 RETRIEVAL_DATE = "2026-07-31"
 
 MODULES = {
@@ -249,6 +252,17 @@ The dataset supports population description and exploratory prediction. It is no
     (METADATA_DIR / "analysis_population.md").write_text(population, encoding="utf-8")
 
 
+def write_public_inspection_sample(dataset: pd.DataFrame) -> None:
+    """Write a small, balanced inspection sample without internal design fields."""
+    samples = [
+        group.sample(n=PUBLIC_SAMPLE_ROWS_PER_YEAR, random_state=PUBLIC_SAMPLE_SEED + int(year))
+        for year, group in dataset.groupby("survey_year", sort=True)
+    ]
+    public_columns = [column for column in dataset.columns if column not in {"analysis_id", "cluster_code", "stratum_code"}]
+    public_sample = pd.concat(samples, ignore_index=True).loc[:, public_columns]
+    public_sample.to_csv(PUBLIC_SAMPLE_PATH, index=False)
+
+
 def main() -> None:
     missing = [filename for modules in MODULES.values() for filename, _, _ in modules.values() if not (RAW_DIR / filename).exists()]
     if missing:
@@ -256,8 +270,12 @@ def main() -> None:
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     dataset = pd.concat([build_year(year) for year in sorted(MODULES)], ignore_index=True)
     dataset.to_csv(OUTPUT_PATH, index=False)
+    write_public_inspection_sample(dataset)
     write_metadata(dataset)
-    print(f"Built {OUTPUT_PATH.relative_to(ROOT)} with {len(dataset):,} eligible children.")
+    print(
+        f"Built {OUTPUT_PATH.relative_to(ROOT)} with {len(dataset):,} eligible children and "
+        f"{PUBLIC_SAMPLE_PATH.relative_to(ROOT)} with {PUBLIC_SAMPLE_ROWS_PER_YEAR * len(MODULES):,} inspection rows."
+    )
 
 
 if __name__ == "__main__":
