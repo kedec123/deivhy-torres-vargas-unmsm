@@ -1,4 +1,4 @@
-"""Run fixed-seed exploratory models and record them in local MLflow."""
+"""Run exploratory models across five prespecified random splits in MLflow."""
 
 from __future__ import annotations
 
@@ -21,6 +21,7 @@ from train import FEATURES, evaluate_model, load_training_data
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "endes_anemia_children_2019_2024.csv"
 RESULTS_PATH = ROOT / "docs" / "experiment_results.csv"
+SUMMARY_PATH = ROOT / "docs" / "experiment_summary.csv"
 MLRUNS_PATH = ROOT / "mlruns"
 SEEDS = [13, 21, 42, 87, 100]
 
@@ -45,10 +46,10 @@ def render_experiment_summary(results: pd.DataFrame) -> None:
         id_vars="model", var_name="metric", value_name="value"
     )
     figure, axis = plt.subplots(figsize=(8, 4.5))
-    for model_name, color in (("logistic_regression", "#8d2f23"), ("random_forest", "#396a50")):
+    for model_name, color in (("logistic_regression", "#8d2f23"), ("random_forest", "#396a50"), ("extra_trees", "#0f4c81")):
         subset = averages[averages["model"] == model_name]
         axis.plot(subset["metric"], subset["value"], marker="o", linewidth=2, label=model_name.replace("_", " "), color=color)
-    axis.set(title="Exploratory ENDES experiments: mean metric across five seeds", xlabel="Metric", ylabel="Score", ylim=(0, 1))
+    axis.set(title="Exploratory ENDES experiments: mean metric across five random splits", xlabel="Metric", ylabel="Score", ylim=(0, 1))
     axis.grid(axis="y", alpha=0.25)
     axis.legend()
     figure.tight_layout()
@@ -67,7 +68,7 @@ def main() -> None:
     results = []
 
     for seed in SEEDS:
-        for model_name in ("logistic_regression", "random_forest"):
+        for model_name in ("logistic_regression", "random_forest", "extra_trees"):
             metrics, _ = evaluate_model(data, model_name, seed)
             with mlflow.start_run(run_name=f"{model_name}_seed_{seed}"):
                 mlflow.log_params(
@@ -79,6 +80,7 @@ def main() -> None:
                         "dataset_sha256": dataset_hash,
                         "git_commit": commit,
                         "purpose": "exploratory_non_clinical",
+                        "split_protocol": "stratified_80_20_prespecified_seed",
                     }
                 )
                 mlflow.log_metrics({key: value for key, value in metrics.items() if isinstance(value, float)})
@@ -87,8 +89,12 @@ def main() -> None:
 
     results_frame = pd.DataFrame(results)
     results_frame.to_csv(RESULTS_PATH, index=False)
+    summary = results_frame.groupby("model")[["auc_roc", "pr_auc", "accuracy", "f1", "recall"]].agg(["mean", "std", "min", "max"])
+    summary.columns = [f"{column[0]}_{column[1]}" for column in summary.columns]
+    summary = summary.reset_index()
+    summary.to_csv(SUMMARY_PATH, index=False)
     render_experiment_summary(results_frame)
-    print(f"Saved {len(results)} experiment rows to {RESULTS_PATH.relative_to(ROOT)}")
+    print(f"Saved {len(results)} experiment rows and split summary to {RESULTS_PATH.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

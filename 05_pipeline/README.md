@@ -1,6 +1,6 @@
 # 05_pipeline - Reproducible ENDES Workflow
 
-This folder contains the technical component of the child-anemia study. It builds a de-identified analytical CSV from official ENDES 2019-2024 modules, produces weighted descriptive summaries, and records fixed-seed exploratory models in MLflow. The model is a course exercise, not a clinical tool.
+This folder contains the technical component of the child-anemia study. It builds a de-identified analytical CSV from official ENDES 2019-2024 modules, produces weighted descriptive summaries with annual uncertainty intervals, and records exploratory models across repeated stratified splits in MLflow. The model is a course exercise, not a clinical tool.
 
 ## Folder map
 
@@ -12,8 +12,10 @@ This folder contains the technical component of the child-anemia study. It build
 | `data/endes_anemia_children_2019_2024_sample.csv` | Public 300-row inspection sample; it is not used for analysis or model training. |
 | `data/raw/` | Local ENDES archives. This directory is never committed to Git. |
 | `src/analyze_endes.py` | Creates weighted descriptive tables, a trend figure, and a plain-language report. |
-| `src/train.py` | Defines leakage-aware preprocessing and the exploratory models. |
-| `src/run_experiments.py` | Runs five fixed seeds, records parameters and metrics in MLflow, and saves the summary chart. |
+| `src/survey_analysis.py` | Creates annual stratified-cluster bootstrap intervals and weighted adjusted associations. |
+| `src/sensitivity_2024.py` | Separately compares the legacy and updated ENDES 2024 outcome definitions. |
+| `src/train.py` | Defines leakage-aware preprocessing and the three exploratory models. |
+| `src/run_experiments.py` | Evaluates three models across five prespecified stratified 80/20 splits and records metrics in MLflow. |
 | `docs/` | Source manifest, variable dictionary, quality checks, descriptive output, and experiment results. |
 | `notebook.ipynb` | Google Colab walkthrough of the same workflow. |
 | `mlruns/` | Local MLflow tracking store created when experiments run. |
@@ -32,7 +34,7 @@ The dataset is represented in Git by `data/endes_anemia_children_2019_2024.csv.d
 
 [`data/endes_anemia_children_2019_2024_sample.csv`](data/endes_anemia_children_2019_2024_sample.csv) is a 300-row public inspection sample. It contains 50 deterministically selected records from each survey year and excludes the project row label, cluster code, and stratum code. It is included so a reader can inspect the CSV structure directly in GitHub. It is not representative, it must not be used for prevalence estimates or model training, and it does not replace the full analytical dataset.
 
-The repository includes ten completed exploratory MLflow runs: two models evaluated with each of five fixed seeds. Their parameters, metrics, and provenance tags are stored in `mlruns/`, alongside the experiment metadata, and `docs/experiment_results.csv` provides a compact tabular summary. The tracking store belongs at the pipeline root rather than in `src/`; `src/` contains executable source code only. Run `mlflow ui --backend-store-uri .\\mlruns` from this folder to inspect the records in a browser.
+The repository includes fifteen completed exploratory MLflow runs: Logistic Regression, Random Forest, and Extra Trees evaluated with each of five prespecified stratified 80/20 splits. Their parameters, metrics, and provenance tags are stored in `mlruns/`, alongside the experiment metadata; `docs/experiment_results.csv` and `docs/experiment_summary.csv` provide compact split-level and variability summaries. The tracking store belongs at the pipeline root rather than in `src/`; `src/` contains executable source code only. Run `mlflow ui --backend-store-uri .\\mlruns` from this folder to inspect the records in a browser.
 
 ## Run locally
 
@@ -43,6 +45,8 @@ python -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements.txt
 .\.venv\Scripts\dvc pull
 .\.venv\Scripts\python src\analyze_endes.py
+.\.venv\Scripts\python src\survey_analysis.py
+.\.venv\Scripts\python src\sensitivity_2024.py
 .\.venv\Scripts\python src\run_experiments.py
 .\.venv\Scripts\mlflow ui --backend-store-uri .\mlruns
 ```
@@ -58,7 +62,7 @@ The DVC remote is a shared Google Drive folder. Do not commit a token or a crede
 
 ## Google Colab
 
-Open [`notebook.ipynb`](notebook.ipynb) in Colab and run the cells from the beginning. The notebook installs the dependencies, retrieves the DVC data, validates the CSV, creates descriptive outputs, and runs the fixed experiment set. If Colab asks for a restart after installing packages, restart the runtime and rerun from the first cell.
+Open [`notebook.ipynb`](notebook.ipynb) in Colab and run the cells from the beginning. The notebook installs the dependencies, retrieves the DVC data, validates the CSV, creates descriptive, interval, and sensitivity outputs, and runs the prespecified experiment set. If Colab asks for a restart after installing packages, restart the runtime and rerun from the first cell.
 
 ## Docker
 

@@ -2,7 +2,7 @@
 
 ## Model details
 
-Two models are trained in `05_pipeline/src/train.py`: logistic regression and random forest. They predict the **legacy ENDES anemia category** in a de-identified analytical dataset for reproducibility practice. Logistic regression is the primary baseline; random forest is a non-linear comparison. Fixed seeds are 13, 21, 42, 87, and 100.
+Three models are trained in `05_pipeline/src/train.py`: Logistic Regression, Random Forest, and Extra Trees. They predict the **legacy ENDES anemia category** in a de-identified analytical dataset for reproducibility practice. Logistic Regression is the interpretable baseline; Random Forest and Extra Trees are nonlinear ensemble comparisons. The models are evaluated on five prespecified splits using seeds 13, 21, 42, 87, and 100.
 
 ## Intended use
 
@@ -18,9 +18,9 @@ Inputs are child age, child sex code, maternal education code, wealth quintile, 
 
 ## Evaluation design
 
-Each experiment uses a stratified 75/25 train-test split. Imputation, scaling, and one-hot encoding are learned inside the pipeline on training data. Training uses normalized ENDES weights; the reported classifier metrics are unweighted holdout metrics and should not be read as population prevalence measures. MLflow stores seed, model, data SHA-256, Git commit, and metrics for every run.
+Each experiment uses a stratified 80/20 train-test split. Imputation, scaling, and one-hot encoding are learned inside the pipeline on training data. Training uses normalized ENDES weights; the reported classifier metrics are unweighted holdout metrics and should not be read as population prevalence measures. MLflow stores split seed, model, data SHA-256, Git commit, and metrics for every run.
 
-Across the five fixed splits, logistic regression had mean AUC-ROC 0.7063, PR-AUC 0.6353, accuracy 0.6550, F1 0.6241, and recall 0.6509. Random forest had mean AUC-ROC 0.7043 and F1 0.6198. These values describe one internal exploratory task only; they are not a measure of clinical benefit, calibration, transportability, or fairness.
+Across the five prespecified splits, Logistic Regression had mean AUC-ROC 0.7077, PR-AUC 0.6377, accuracy 0.6563, F1 0.6249, and recall 0.6506. Random Forest had mean AUC-ROC 0.7051 and Extra Trees 0.7050. The AUC-ROC standard deviation was below 0.004 for each model. These values describe one internal exploratory task only; they are not a measure of clinical benefit, calibration, transportability, or fairness.
 
 ## Known limitations and risks
 
@@ -38,16 +38,17 @@ The model card is paired with `datasheet.md` and the ethics protocol. A similar 
 | Training population | 57,539 eligible de-identified ENDES child records before the stratified split |
 | Outcome | Legacy binary anemia category derived from `HW57` |
 | Data version evidence | DVC pointer, source checksums, and dataset SHA-256 logged in MLflow |
-| Reproducibility evidence | Five fixed seeds, pinned dependencies, Git commit, and MLflow records |
+| Reproducibility evidence | Five prespecified stratified splits, pinned dependencies, Git commit, and MLflow records |
 
 ## Reported internal performance
 
-| Model | Mean AUC-ROC | Mean PR-AUC | Mean accuracy | Mean F1 | Mean recall |
+| Model | Mean AUC-ROC (SD) | Mean PR-AUC | Mean accuracy | Mean F1 | Mean recall |
 |---|---:|---:|---:|---:|---:|
-| Logistic regression | 0.7063 | 0.6353 | 0.6550 | 0.6241 | 0.6509 |
-| Random forest | 0.7043 | 0.6385 | 0.6544 | 0.6198 | 0.6403 |
+| Logistic Regression | 0.7077 (0.0038) | 0.6377 | 0.6563 | 0.6249 | 0.6506 |
+| Random Forest | 0.7051 (0.0035) | 0.6401 | 0.6540 | 0.6193 | 0.6396 |
+| Extra Trees | 0.7050 (0.0027) | 0.6402 | 0.6538 | 0.6223 | 0.6480 |
 
-These are mean values across five fixed internal splits, not confidence intervals and not an external validation. They should never be compared with a clinical benchmark or interpreted as evidence that the model improves child health outcomes.
+These are mean values across five prespecified internal splits, not confidence intervals and not an external validation. They should never be compared with a clinical benchmark or interpreted as evidence that the model improves child health outcomes.
 
 ## Evaluation factors
 

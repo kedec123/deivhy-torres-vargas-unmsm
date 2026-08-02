@@ -36,7 +36,7 @@ The paper is useful as a methodological comparison point because it makes the mo
 
 ## What this repository does differently
 
-The ENDES project records source checksums, a DVC state, fixed seeds, train-only preprocessing, an executable environment, MLflow parameters and metrics, and a separate subgroup audit. These practices make the workflow easier to inspect. They do not make the exploratory model clinically valid or eliminate the need for independent replication.
+The ENDES project records source checksums, a DVC state, several prespecified splits, train-only preprocessing, an executable environment, MLflow parameters and metrics, and a separate subgroup audit. These practices make the workflow easier to inspect. They do not make the exploratory model clinically valid or eliminate the need for independent replication.
 
 ## Audit record
 

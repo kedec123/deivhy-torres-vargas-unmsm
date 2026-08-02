@@ -51,7 +51,7 @@ The repository and DVC artefacts will be retained through course evaluation and 
 
 ## Quality assurance and change control
 
-The build script is the only approved route for regenerating the analytical CSV. It checks the expected modules, eligibility age range, outcome presence, analysis-ID uniqueness, and positive sampling weights. The resulting checks are written to `05_pipeline/docs/quality_checks.md`. The notebook is validated as JSON and the full build, analysis, and fixed-seed experiment sequence is rerun before publication.
+The build script is the only approved route for regenerating the analytical CSV. It checks the expected modules, eligibility age range, outcome presence, analysis-ID uniqueness, and positive sampling weights. The resulting checks are written to `05_pipeline/docs/quality_checks.md`. The notebook is validated as JSON and the full build, analysis, and prespecified-split experiment sequence is rerun before publication.
 
 A material change is any change to a source archive, variable definition, age rule, outcome definition, join logic, model feature set, seed set, or output interpretation. For a material change, the author must update the relevant script or parameter file, regenerate the dependent outputs, inspect the DVC state, update the protocol and data documentation where necessary, and make a descriptive Git commit. A change must not be hidden by manually editing a generated result file.
 

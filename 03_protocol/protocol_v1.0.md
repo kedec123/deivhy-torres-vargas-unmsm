@@ -70,7 +70,7 @@ The first stage will verify the data contract: expected years, age range, non-du
 
 The third stage will estimate adjusted associations in pooled repeated cross-sectional data, including survey year. Effect estimates, uncertainty, missing-data decisions, and model diagnostics must be documented before any final conclusion is written. The analysis will describe association, not effect, and will report whether a result is sensitive to the 2024 measurement boundary.
 
-The technical artefact will run logistic regression and random forest with fixed seeds, stratified train-test splits, and preprocessing fitted only on training data. Metrics will be reported as internal exploratory results. The model will not be used for diagnosis, screening, treatment, triage, benefit eligibility, or ranking of children, households, departments, or communities.
+The technical artefact runs Logistic Regression, Random Forest, and Extra Trees across five prespecified stratified 80/20 splits, with preprocessing fitted only on training data. Metrics and their variability are reported as internal exploratory results. The model will not be used for diagnosis, screening, treatment, triage, benefit eligibility, or ranking of children, households, departments, or communities.
 
 ## 9. Reproducibility and data governance
 

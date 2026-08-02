@@ -35,6 +35,8 @@ The project uses a de-identified analytical CSV. It is for population-level desc
 
 A public 300-row inspection sample is available at [`05_pipeline/data/endes_anemia_children_2019_2024_sample.csv`](05_pipeline/data/endes_anemia_children_2019_2024_sample.csv). It is provided only to make the dataset structure visible in GitHub; it is not used for analysis, prevalence estimates, or model training.
 
+For the oral presentation, [`05_pipeline/docs/presentation_evidence.md`](05_pipeline/docs/presentation_evidence.md) identifies the topic, data type, primary method, exploratory classification task, algorithm rationale, observed results, and interpretation limits in one place.
+
 ## Reproduce the Bias Audit
 
 See [`11_bias_audit/bias_audit_report.md`](11_bias_audit/bias_audit_report.md). The fairness exercise uses the Adult Census benchmark, not ENDES, and its results must not be transferred to health decisions.

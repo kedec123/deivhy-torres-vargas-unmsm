@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score, recall_score, roc_auc_score
@@ -36,12 +36,14 @@ def build_pipeline(model_name: str, seed: int) -> Pipeline:
         model = LogisticRegression(max_iter=2000, random_state=seed, class_weight="balanced")
     elif model_name == "random_forest":
         model = RandomForestClassifier(n_estimators=300, min_samples_leaf=8, random_state=seed, n_jobs=-1, class_weight="balanced")
+    elif model_name == "extra_trees":
+        model = ExtraTreesClassifier(n_estimators=300, min_samples_leaf=8, random_state=seed, n_jobs=-1, class_weight="balanced")
     else:
-        raise ValueError("model_name must be 'logistic_regression' or 'random_forest'")
+        raise ValueError("model_name must be 'logistic_regression', 'random_forest', or 'extra_trees'")
     return Pipeline([("preprocess", preprocessor), ("model", model)])
 
 
-def evaluate_model(frame: pd.DataFrame, model_name: str, seed: int, test_size: float = 0.25) -> tuple[dict, pd.DataFrame]:
+def evaluate_model(frame: pd.DataFrame, model_name: str, seed: int, test_size: float = 0.20) -> tuple[dict, pd.DataFrame]:
     train, test = train_test_split(frame, test_size=test_size, random_state=seed, stratify=frame["anemia_legacy"])
     pipeline = build_pipeline(model_name, seed)
     pipeline.fit(train[FEATURES], train["anemia_legacy"], model__sample_weight=train["survey_weight"])
@@ -66,7 +68,7 @@ def evaluate_model(frame: pd.DataFrame, model_name: str, seed: int, test_size: f
 
 def main() -> None:
     data = load_training_data()
-    for model_name in ("logistic_regression", "random_forest"):
+    for model_name in ("logistic_regression", "random_forest", "extra_trees"):
         metrics, _ = evaluate_model(data, model_name, seed=42)
         formatted = " ".join(f"{key}={value:.4f}" for key, value in metrics.items() if isinstance(value, float))
         print(f"{model_name}: {formatted}")
