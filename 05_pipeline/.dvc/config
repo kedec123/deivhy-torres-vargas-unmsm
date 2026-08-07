@@ -1,5 +1,3 @@
-[core]
-    remote = storage
-['remote "storage"']
-    url = gdrive://1m4NdxDv5WEIn6w8vLXA80-tZzwvu1WO3
-    gdrive_acknowledge_abuse = true
+# The analytical CSV remains DVC-tracked for checksum-based versioning.
+# No shared remote is committed: independent reproduction uses the public INEI
+# download route in data/download_endes.py, without credentials.

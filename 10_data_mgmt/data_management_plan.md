@@ -2,15 +2,15 @@
 
 ## Data lifecycle
 
-The project receives anonymous official ENDES module archives, creates a de-identified analysis file, and produces aggregate tables, figures, code, and MLflow tracking artifacts. The original archives remain local and are excluded from Git; the processed CSV is represented by a DVC pointer. Git holds code, metadata, checksums, aggregate outputs, and MLflow tracking records. The source manifest is the authoritative record of origin and transformation.
+The project retrieves anonymous official ENDES module archives from public INEI URLs, creates a de-identified analysis file, and produces aggregate tables, figures and code. The original archives remain local and are excluded from Git; the processed CSV is represented by a DVC pointer. Git holds code, metadata, source checksums and aggregate outputs. Local MLflow stores are regenerated when required and are not committed. The source manifest is the authoritative record of origin and transformation.
 
 ## Access and security
 
-The DVC remote is a shared Google Drive folder managed by the repository owner. Access is limited to authorised course collaborators. Credentials stay in local DVC configuration and must never be committed. The repository currently contains no direct identifiers in the processed CSV, but it should still be treated as research data rather than redistributed casually.
+The default reproduction route uses public official INEI archives with committed SHA-256 checks. No DVC remote or credential is required by a reviewer. A project owner may configure a private local cache, but its configuration and credentials stay outside Git. The repository currently contains no direct identifiers in the processed CSV, but the analytical file is not published and should still be treated as research data rather than redistributed casually.
 
 ## FAIR and documentation commitments
 
-Findability is supported by stable file names, the source manifest, and Git history. Accessibility is controlled through DVC permissions. Interoperability comes from UTF-8 CSV, a machine-readable dictionary, and pinned software versions. Reuse is supported by a documented analytical population, reproducible build script, and explicit limitations.
+Findability is supported by stable file names, the source manifest, and Git history. Accessibility is supported by public official source URLs and checksum-verified reconstruction. Interoperability comes from UTF-8 CSV, a machine-readable dictionary, and pinned software versions. Reuse is supported by a documented analytical population, reproducible build script, and explicit limitations.
 
 ## Legal and retention considerations
 
@@ -18,7 +18,7 @@ The project will follow the applicable conditions of INEI microdata access and t
 
 ## Backup, versioning, and incident response
 
-GitHub is the code and documentation history; DVC/Drive is the data-artifact store. Source checksums make accidental file substitution visible. If access is exposed, credentials will be revoked or rotated, the remote sharing list reviewed, and any affected collaborator notified. If a data-quality issue is found, it will be logged, fixed in a new commit, and connected to the relevant protocol or results revision.
+GitHub is the code and documentation history; local storage holds the source archives and generated analytical file. DVC records the analytical-file checksum, while the source manifest makes archive substitution visible. If a private local cache credential is exposed, it will be revoked or rotated. If a data-quality issue is found, it will be logged, fixed in a new commit, and connected to the relevant protocol or results revision.
 
 ## Data inventory and responsibility
 
@@ -28,14 +28,14 @@ GitHub is the code and documentation history; DVC/Drive is the data-artifact sto
 | De-identified analytical CSV | `05_pipeline/data/` | DVC pointer and local cache | Restricted research use | Rebuild only through the documented script. |
 | Metadata and data contract | `05_pipeline/docs/` | Git | Repository collaborators | Review when a field or rule changes. |
 | Aggregate figures and tables | `05_pipeline/docs/` | Git | Repository readers | Regenerate after a documented code or data change. |
-| MLflow tracking store | `05_pipeline/mlruns/` | Git-tracked experiment metadata | Repository readers | Preserve run provenance and avoid manual edits. |
+| MLflow tracking store | `05_pipeline/mlruns/` | Local regenerated store | Local execution only | Recreate from the prespecified experiment script; do not commit machine metadata. |
 
 ## FAIR implementation record
 
 | Principle | Concrete project practice | Boundary |
 |---|---|---|
 | Findable | Stable paths, source manifest, checksums, Git commits, DVC files, and named outputs. | These records identify the project artefacts; they do not assign a public DOI. |
-| Accessible | Data can be retrieved through DVC by authorised collaborators with a private service-account configuration. | Access is controlled and depends on the source terms and Drive permissions. |
+| Accessible | A reviewer can download the official public ENDES archives through the checksum-verifying script. | Reproduction remains subject to source availability and INEI terms. |
 | Interoperable | UTF-8 CSV, machine-readable dictionary, explicit coding, Python scripts, and pinned packages. | Codes retain ENDES meanings and must be read with the dictionary. |
 | Reusable | Population rules, transformation script, quality checks, ethics boundary, and model documentation are included. | Reuse must respect INEI conditions and the stated non-clinical purpose. |
 
@@ -57,11 +57,11 @@ A material change is any change to a source archive, variable definition, age ru
 
 ## Secure access workflow
 
-1. The repository owner keeps the Google service-account JSON key outside the repository.
-2. The Drive folder is shared only with the required service-account or collaborator identity.
-3. Each collaborator configures the private key path with `dvc remote modify --local`; `.dvc/config.local` remains ignored by Git.
-4. Access is removed when the course collaboration ends or a person no longer needs the data.
-5. If a credential or unintended copy is exposed, the owner rotates or revokes access, reviews DVC/Drive permissions, documents the incident, and regenerates affected data artefacts if their integrity is uncertain.
+1. A reviewer runs `data/download_endes.py`, which verifies every official archive against the committed source manifest.
+2. The build script performs the documented temporary joins and excludes ENDES join keys from the analytical CSV.
+3. Any private cache is configured only with local DVC settings; no credential is needed for the public reconstruction path.
+4. If a source checksum changes, the script stops and the owner documents the source revision before producing new outputs.
+5. If an unintended local copy is exposed, the owner reviews access, documents the incident and regenerates affected artefacts if integrity is uncertain.
 
 ## Planned sharing package
 

@@ -16,6 +16,8 @@ Thumbs.db
 # Recreated data and experiment stores
 /data/
 /mlruns/
+/05_pipeline/mlruns/
+/05_pipeline/.mlruns/
 /05_pipeline/.venv/
 /05_pipeline/data/raw/
 /05_pipeline/docs/latest_test_predictions.csv

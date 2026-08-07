@@ -1,6 +1,6 @@
 # Weighted descriptive analysis
 
-This report describes the de-identified analytical CSV built from the official ENDES modules. Estimates use the normalized ENDES individual weight (`V005/1,000,000`) as a descriptive weight. The current script does not compute design-based standard errors or confidence intervals; those are required before any formal population inference.
+This report describes the de-identified analytical CSV built from the official ENDES modules. Estimates use the normalized ENDES individual weight (`V005/1,000,000`) as a descriptive weight. Formal annual uncertainty is produced separately by `src/survey_analysis.py`, which reports Taylor-linearized design-based intervals and a stratified-cluster bootstrap comparison. This descriptive script intentionally does not duplicate those inferential calculations.
 
 - Dataset SHA-256: `78e79e4bbff39d5cf317031b138c07a659a3de9cfdcb7f8cab227dbb8503cd6d`
 - Eligible children: 57,539
@@ -20,4 +20,4 @@ This report describes the de-identified analytical CSV built from the official E
 
 ## Interpretation boundary
 
-The series is designed for internal comparability because it uses the legacy field in all years. It should not be substituted for the official 2024 figure produced with the updated measurement definition. The table is descriptive, not causal evidence.
+The series is designed for internal comparability because it uses the legacy field in all years. It should not be substituted for the official 2024 figure produced with the updated measurement definition. The table is descriptive, not causal evidence; use `analysis_by_year_with_ci.csv` for the corresponding design-based annual intervals.

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Child Anemia in Peru — ENDES 2019–2024</title>
+  <style>
+    :root { --ink:#18232d; --paper:#f7f4ed; --accent:#8d2f23; --green:#2e6d58; --muted:#60707b; --line:#d7d0c3; }
+    * { box-sizing:border-box; } body { margin:0; background:#111; color:var(--ink); font-family:Georgia, 'Times New Roman', serif; }
+    .slide { display:none; width:min(100vw, 1440px); min-height:100vh; margin:auto; padding:7vh 9vw 8vh; background:var(--paper); position:relative; overflow:hidden; }
+    .slide.active { display:block; } .eyebrow { color:var(--accent); font:700 .82rem/1.2 Arial,sans-serif; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { font-size:clamp(3rem,7vw,7rem); margin:.35em 0; line-height:.92; } h2 { font-size:clamp(2.1rem,4.8vw,4.7rem); line-height:1; margin:.35em 0 .6em; max-width:1000px; }
+    h3 { font:700 1.1rem/1.2 Arial,sans-serif; margin:.2rem 0 .5rem; } p, li { font-size:clamp(1rem,1.45vw,1.55rem); line-height:1.42; } .lead { max-width:850px; color:var(--muted); }
+    .footer { position:absolute; left:9vw; right:9vw; bottom:4vh; display:flex; justify-content:space-between; color:var(--muted); font: .78rem Arial,sans-serif; letter-spacing:.07em; text-transform:uppercase; }
+    .accent { color:var(--accent); } .grid { display:grid; gap:1.4rem; grid-template-columns:repeat(3,1fr); } .grid.two { grid-template-columns:repeat(2,1fr); }
+    .card { padding:1.25rem; border:1px solid var(--line); background:#fffdf8; } .card strong { color:var(--accent); font-size:2.4rem; } .small { font: .9rem/1.4 Arial,sans-serif; color:var(--muted); }
+    .path { font:600 1.15rem/1.5 Arial,sans-serif; display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; } .node { padding:.8rem 1rem; background:#fffdf8; border:1px solid var(--line); } .arrow { color:var(--accent); font-size:1.8rem; }
+    table { border-collapse:collapse; width:100%; font-family:Arial,sans-serif; background:#fffdf8; } th,td { padding:.65rem; border-bottom:1px solid var(--line); text-align:left; } th { color:var(--accent); font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; }
+    .callout { border-left:8px solid var(--accent); padding:.8rem 1.2rem; background:#fffdf8; max-width:1100px; }
+    .forest { width:100%; max-width:1000px; margin-top:.6rem; } .forest row { display:grid; grid-template-columns:100px 1fr 190px; align-items:center; gap:1rem; margin:.7rem 0; font-family:Arial,sans-serif; } .track { height:6px; background:linear-gradient(90deg, transparent 49.75%, var(--muted) 49.75%, var(--muted) 50.25%, transparent 50.25%); position:relative; } .ci { position:absolute; height:4px; top:1px; background:var(--green); } .dot { width:13px; height:13px; border-radius:50%; background:var(--accent); position:absolute; top:-3px; } .sig { color:var(--accent); font-weight:700; }
+    .controls { position:fixed; right:1.2rem; bottom:1.2rem; z-index:4; display:flex; gap:.4rem; } button { padding:.55rem .8rem; border:0; background:var(--ink); color:#fff; cursor:pointer; font:700 .8rem Arial,sans-serif; }
+    @media (max-width:700px) { .grid,.grid.two { grid-template-columns:1fr; } .forest row { grid-template-columns:70px 1fr 105px; gap:.45rem; font-size:.8rem; } .slide { padding:7vh 7vw; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="slide active">
+      <div class="eyebrow">UNMSM · Research Methods and Scientific Integrity</div>
+      <h1>Child anemia<br>in <span class="accent">Peru</span></h1>
+      <p class="lead">Weighted trends and observed inequalities among children aged 6–35 months, using ENDES 2019–2024.</p>
+      <p>Deivhy Torres Vargas</p>
+      <footer class="footer"><span>Quantitative repeated cross-sectional study</span><span>1 / 7</span></footer>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Research question and boundary</div>
+      <h2>Population description and associations — <span class="accent">not causal or clinical prediction</span>.</h2>
+      <div class="grid two"><div class="card"><h3>Question</h3><p>How did legacy-comparable anemia prevalence change from 2019 to 2024, and which measured characteristics were associated with anemia?</p></div><div class="card"><h3>Data and design</h3><p>57,539 de-identified, tabular ENDES records. Numeric and categorical variables; ENDES weights, strata and primary sampling units are retained for inference.</p></div></div>
+      <div class="callout"><p>The separate machine-learning exercise is a reproducible binary-classification teaching artefact. It does not diagnose, triage, rank or treat children.</p></div>
+      <footer class="footer"><span>Legacy HW57 outcome across all years</span><span>2 / 7</span></footer>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Independent reproducibility</div>
+      <h2>A clean clone rebuilds the dataset <span class="accent">without private credentials</span>.</h2>
+      <div class="path"><span class="node">18 public INEI archives</span><span class="arrow">→</span><span class="node">SHA-256 verification</span><span class="arrow">→</span><span class="node">Temporary documented join</span><span class="arrow">→</span><span class="node">De-identified CSV</span></div>
+      <div class="grid three" style="margin-top:2rem"><div class="card"><strong>18</strong><p>official source archives</p></div><div class="card"><strong>6</strong><p>survey years, 2019–2024</p></div><div class="card"><strong>0</strong><p>credentials required by a reviewer</p></div></div>
+      <p class="small">DVC remains a checksum-based data-version record. The project does not publish the child-level analytical CSV or raw archives.</p>
+      <footer class="footer"><span>Source manifest + public reconstruction script</span><span>3 / 7</span></footer>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Primary trend: design-based uncertainty</div>
+      <h2>Legacy-comparable prevalence rose after 2021, with <span class="accent">Taylor 95% intervals</span>.</h2>
+      <table><thead><tr><th>Year</th><th>Weighted prevalence</th><th>Taylor 95% CI</th><th>n</th></tr></thead><tbody>
+        <tr><td>2019</td><td>39.8%</td><td>38.6%–41.1%</td><td>10,320</td></tr><tr><td>2020</td><td>38.3%</td><td>36.5%–40.0%</td><td>6,051</td></tr><tr><td>2021</td><td>38.4%</td><td>37.3%–39.6%</td><td>10,902</td></tr><tr><td>2022</td><td>42.0%</td><td>40.8%–43.2%</td><td>10,557</td></tr><tr><td>2023</td><td>42.8%</td><td>41.5%–44.1%</td><td>9,951</td></tr><tr><td>2024</td><td>43.5%</td><td>42.3%–44.8%</td><td>9,758</td></tr>
+      </tbody></table>
+      <p class="small">Taylor linearization uses ENDES weights, strata and PSUs. A stratified-cluster bootstrap was retained as an independent interval comparison.</p>
+      <footer class="footer"><span>HW57: same primary definition in every year</span><span>4 / 7</span></footer>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Adjusted association model</div>
+      <h2>Compared with 2019, <span class="accent">2023 and 2024 remain higher</span> after adjustment.</h2>
+      <div class="forest" aria-label="Adjusted odds ratios by survey year relative to 2019"><row><b>2020</b><div class="track"><i class="ci" style="left:43%;width:12%"></i><i class="dot" style="left:50%"></i></div><span>OR 1.04 · p=.234</span></row><row><b>2021</b><div class="track"><i class="ci" style="left:31%;width:10%"></i><i class="dot" style="left:36%"></i></div><span class="sig">OR 0.91 · p=.001</span></row><row><b>2022</b><div class="track"><i class="ci" style="left:46%;width:12%"></i><i class="dot" style="left:51%"></i></div><span>OR 1.06 · p=.069</span></row><row><b>2023</b><div class="track"><i class="ci" style="left:57%;width:13%"></i><i class="dot" style="left:63%"></i></div><span class="sig">OR 1.12 · p&lt;.001</span></row><row><b>2024</b><div class="track"><i class="ci" style="left:61%;width:14%"></i><i class="dot" style="left:68%"></i></div><span class="sig">OR 1.16 · p&lt;.001</span></row></div>
+      <p class="small">Model adjusted for age, child sex, maternal education, wealth quintile, residence and department. Intervals and p-values here are model-based associations, not causal effects.</p>
+      <footer class="footer"><span>Reference year: 2019 · vertical line: OR = 1</span><span>5 / 7</span></footer>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Interpretation safeguards</div>
+      <h2>Three safeguards prevent an <span class="accent">over-read</span> of the evidence.</h2>
+      <div class="grid three"><div class="card"><h3>2024 definition</h3><p>HW57 remains primary for comparability. The updated HW57A estimate (34.9%) is reported only as a measurement sensitivity, not mixed into the trend.</p></div><div class="card"><h3>2020 conditions</h3><p>INEI adapted collection during the COVID-19 emergency, including telephone interviews and gradual return to fieldwork. The 2020 dip is not treated as a decisive health change.</p></div><div class="card"><h3>Classifier</h3><p>Three models × five prespecified 80/20 splits = 15 local runs. Internal AUC near 0.71 is not epidemiological, external or clinical performance.</p></div></div>
+      <footer class="footer"><span>Descriptive and associative claims only</span><span>6 / 7</span></footer>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">What this project delivers</div>
+      <h2>A transparent ENDES workflow that can be <span class="accent">checked, rebuilt and extended</span>.</h2>
+      <ul><li>Public-source retrieval with checksum verification and a documented de-identification route.</li><li>Design-based annual uncertainty plus bootstrap comparison.</li><li>Explicit measurement sensitivity, adjusted association boundaries and no clinical claim.</li></ul>
+      <p class="lead">Repository: <strong>github.com/kedec123/deivhy-torres-vargas-unmsm</strong></p>
+      <footer class="footer"><span>Thank you</span><span>7 / 7</span></footer>
+    </section>
+  </main>
+  <div class="controls"><button id="prev" aria-label="Previous slide">← Previous</button><button id="next" aria-label="Next slide">Next →</button></div>
+  <script>
+    const slides=[...document.querySelectorAll('.slide')]; let index=0;
+    function show(next){index=(next+slides.length)%slides.length;slides.forEach((s,i)=>s.classList.toggle('active',i===index));history.replaceState(null,'',`#${index+1}`)}
+    document.getElementById('prev').onclick=()=>show(index-1); document.getElementById('next').onclick=()=>show(index+1);
+    document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))show(index+1);if(['ArrowLeft','PageUp'].includes(e.key))show(index-1)});
+    const requested=Number(location.hash.slice(1)); if(requested>=1&&requested<=slides.length)show(requested-1);
+  </script>
+</body>
+</html>

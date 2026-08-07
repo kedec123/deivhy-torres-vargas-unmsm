@@ -1,14 +1,17 @@
 # Stranger-Test Checklist
 
-Use this checklist from a clean clone before presenting the repository as fully reproducible.
+Use this checklist from a clean clone. The default route does not require DVC access, a Google login or a service-account key.
 
 - [ ] Clone the repository and switch to the intended commit or release tag.
-- [ ] Create a Python 3.11 environment and install `05_pipeline/requirements.txt`.
-- [ ] Configure the local-only Google Drive service-account settings described in `05_pipeline/README.md`.
-- [ ] Run `dvc pull` and confirm that `data/endes_anemia_children_2019_2024.csv` is restored and matches its DVC pointer. The original ENDES archives are obtained separately from INEI and remain local in `data/raw/`.
-- [ ] Run `python src/analyze_endes.py`, `python src/survey_analysis.py`, `python src/sensitivity_2024.py`, and `python src/run_experiments.py`, then compare the regenerated outputs with the committed summaries.
-- [ ] Open MLflow with `mlflow ui --backend-store-uri .\\mlruns` and inspect the fifteen prespecified-split runs.
-- [ ] Build the image with `docker build -t endes-anemia-pipeline .` and repeat at least the descriptive command in the container.
-- [ ] Record the operating system, Python version, package versions, and any numerical differences found.
+- [ ] Create a Python 3.11+ environment and install `05_pipeline/requirements.txt`.
+- [ ] From `05_pipeline`, run `python data/download_endes.py`. Confirm that all 18 official archives pass their SHA-256 checks against `docs/source_manifest.csv`.
+- [ ] Run `python data/create_dataset.py` and `python data/verify_dataset.py`. Confirm that the resulting CSV matches `data/endes_anemia_children_2019_2024.csv.dvc`.
+- [ ] Run `python src/analyze_endes.py`, `python src/survey_analysis.py`, `python src/sensitivity_2024.py`, and `python src/run_experiments.py`.
+- [ ] Confirm that `analysis_by_year_with_ci.csv` contains Taylor-linearized design-based intervals and that `analysis_ci_method_comparison.csv` contains the bootstrap comparison.
+- [ ] Confirm that `modelled_year_effects_vs_2019.csv` has adjusted effects for 2020-2024 relative to 2019, labelled as model-based associations.
+- [ ] Compare regenerated outputs with committed summaries. Small platform-level floating-point differences should be recorded, not hidden.
+- [ ] Optionally open `mlflow ui --backend-store-uri .\.mlruns` locally after `run_experiments.py`; the store is intentionally not committed.
 
-At the time of the latest repository update, local execution checks passed. The shared Drive transfer and Docker build are deliberately left unchecked until the repository owner configures a private Google service-account key and uses a Docker-enabled machine.
+## DVC note
+
+The DVC pointer records the expected checksum and file size of the analytical CSV. A project owner may configure a private local DVC cache, but it is not required for independent reproduction and no private remote or credential is part of this checklist.

@@ -66,7 +66,7 @@ The planned explanatory variables are child age in months, child sex code, mater
 
 ## 8. Analysis plan
 
-The first stage will verify the data contract: expected years, age range, non-duplicated analysis IDs, non-missing primary outcome, and positive weights. The second stage will produce weighted annual and residence summaries. Before formal population inference, the author will implement design-based standard errors and confidence intervals using an appropriate survey-analysis approach; the current descriptive script does not yet provide those intervals.
+The first stage will verify the data contract: expected years, age range, non-duplicated analysis IDs, non-missing primary outcome, and positive weights. The second stage will produce weighted annual and residence summaries. Annual prevalence will use Taylor-linearized design-based standard errors and confidence intervals with ENDES strata and primary sampling units; a stratified-cluster bootstrap will be retained as a comparison. The descriptive script does not duplicate those inferential calculations.
 
 The third stage will estimate adjusted associations in pooled repeated cross-sectional data, including survey year. Effect estimates, uncertainty, missing-data decisions, and model diagnostics must be documented before any final conclusion is written. The analysis will describe association, not effect, and will report whether a result is sensitive to the 2024 measurement boundary.
 
@@ -74,9 +74,9 @@ The technical artefact runs Logistic Regression, Random Forest, and Extra Trees 
 
 ## 9. Reproducibility and data governance
 
-Git records code and document history. DVC records the analytical-data state, while MLflow records experiment parameters, metrics, data hash, and Git commit. The repository provides a Colab notebook, pinned dependencies, a Dockerfile, and a documented local reproduction route. The source manifest records the official retrieval URL, date, archive name, checksum, module, and transformation for every input.
+Git records code and document history. DVC records the analytical-data state, while local MLflow records experiment parameters, metrics, data hash, and Git commit when a reader runs the exploratory workflow. The repository provides a Colab notebook, pinned dependencies, a Dockerfile, and a documented local reproduction route. The source manifest records the official retrieval URL, date, archive name, checksum, module, and transformation for every input.
 
-No credential is stored in Git. A shared Google Drive DVC remote is configured, but a private service-account key is required before a clean-clone `dvc pull` test can be claimed as complete. The required local configuration is documented in `05_pipeline/README.md`.
+No credential is stored in Git. A clean clone can use `data/download_endes.py` to retrieve and verify the public official ENDES archives before rebuilding the analytical CSV. The DVC pointer remains a checksum record; any private cache is optional and local.
 
 ## 10. Ethics, risks, and dissemination
 

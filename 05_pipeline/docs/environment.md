@@ -2,7 +2,7 @@
 
 ## Reference software
 
-The pipeline was validated in a clean local Python 3.11.15 environment on 1 August 2026 using pandas 2.2.2, scikit-learn 1.5.2, MLflow 2.19.0, and the dependencies pinned in `05_pipeline/requirements.txt`. The analysis, experiment, and fairness scripts are rerun when a published code or dependency change requires new output evidence.
+This revision was executed in a clean local Python 3.12.13 environment using pandas 2.2.2, scikit-learn 1.5.2, MLflow 2.19.0, and the dependencies pinned in `05_pipeline/requirements.txt`. The Docker image targets Python 3.11; the public-source workflow is intended to be compatible with Python 3.11 or later. The analysis, experiment, and fairness scripts are rerun when a published code or dependency change requires new output evidence.
 
 ## Workstation used for the recorded outputs
 
@@ -18,4 +18,4 @@ The GPU is listed for transparency only. It was not used to produce the document
 
 ## Expected variation
 
-Pinned libraries and five prespecified random splits make the workflow inspectable within the documented environment. Minor differences can still arise across operating systems or low-level numerical libraries, particularly for tree ensembles. The repository therefore records the dataset SHA-256, Git commit, split seed, parameters, and metrics for each MLflow run instead of treating one metric value as portable proof of model quality. A Google Drive `dvc pull` from a clean clone and a Docker run remain separate checks because they require local service-account credentials and a Docker-enabled machine.
+Pinned libraries and five prespecified random splits make the workflow inspectable within the documented environment. Minor differences can still arise across operating systems or low-level numerical libraries, particularly for tree ensembles. The repository therefore records the dataset SHA-256, split seed, parameters, and metrics in portable CSV summaries instead of treating one metric value as portable proof of model quality. A clean clone retrieves public official ENDES archives through `data/download_endes.py`; no Google Drive credential is required. Docker remains a separate check because it requires a Docker-enabled machine.

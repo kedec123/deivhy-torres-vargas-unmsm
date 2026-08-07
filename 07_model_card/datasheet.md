@@ -22,7 +22,7 @@ Do not attempt to re-identify a child, link the file to external individual-leve
 
 ## Maintenance and distribution
 
-The de-identified analytical CSV is represented by a DVC pointer and intended for retrieval from an access-controlled Google Drive remote. Git retains code, metadata, aggregate outputs, and the MLflow tracking records. Access should be granted only to authorised course collaborators, and any release outside that group must be checked against the INEI terms and the project data-management plan.
+The de-identified analytical CSV is represented by a DVC pointer, while its reproducible construction uses public official ENDES archive URLs and committed SHA-256 checks. Git retains code, metadata and aggregate outputs; MLflow is recreated locally and is not committed because it embeds machine paths. Any release outside this documented workflow must still be checked against INEI terms and the project data-management plan.
 
 ## Dataset composition
 
@@ -46,8 +46,8 @@ No primary outcome value is imputed. Missing explanatory values remain available
 
 ## Collection context and representativeness
 
-ENDES is a repeated household survey, not a clinical registry or a census. The dataset is appropriate for the specified survey population when weights and design information are handled correctly. It does not represent children outside the eligible age range, children missing a valid primary outcome, or every biological and service factor relevant to anemia. The current descriptive script uses weights but does not yet produce design-based uncertainty; that work is explicitly pending before final population inference.
+ENDES is a repeated household survey, not a clinical registry or a census. The dataset is appropriate for the specified survey population when weights and design information are handled correctly. It does not represent children outside the eligible age range, children missing a valid primary outcome, or every biological and service factor relevant to anemia. Annual prevalence uses Taylor-linearized design-based uncertainty with ENDES strata and primary sampling units, alongside a stratified-cluster bootstrap comparison. The adjusted association model remains model-based and non-causal.
 
 ## Sensitive use and distribution controls
 
-Although the analytical CSV excludes direct identifiers, it remains research data. Users must not attempt re-identification, join it to external person-level data, publish small cells, or use it to label a family, community, or department as inherently high risk. The original archives stay local, the processed CSV is represented by its DVC pointer, and the MLflow tracking records are committed in Git. Any broader sharing requires a new review of INEI conditions, disclosure risk, and the data-management plan.
+Although the analytical CSV excludes direct identifiers, it remains research data. Users must not attempt re-identification, join it to external person-level data, publish small cells, or use it to label a family, community, or department as inherently high risk. The original archives stay local, the processed CSV is represented by its DVC pointer, and MLflow is regenerated locally. Any broader sharing requires a new review of INEI conditions, disclosure risk, and the data-management plan.

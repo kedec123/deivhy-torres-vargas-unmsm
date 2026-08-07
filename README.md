@@ -11,7 +11,7 @@ Doctoral course project for *Research Methods and Scientific Integrity in AI and
 - `02_method/` - Method-Fit Matrix (Session 2).
 - `03_protocol/` - Research protocol drafts v0.1 and v1.0 (Session 3).
 - `04_literature/` - Focused systematic review, PRISMA diagram, and gap analysis (Session 4).
-- `05_pipeline/` - Reproducible ENDES workflow with DVC, MLflow, Docker, and a Colab notebook (Session 5).
+- `05_pipeline/` - Reproducible ENDES workflow with public official-source reconstruction, DVC checksum tracking, local MLflow, Docker, and a Colab notebook (Session 5).
 - `06_repro_audit/` - Reproducibility audit of an accessible health-ML article (Session 6).
 - `07_model_card/` - Model card and datasheet (Session 7).
 - *(Session 8 is an integration checkpoint; its feedback is incorporated into the protocol.)*
@@ -19,6 +19,7 @@ Doctoral course project for *Research Methods and Scientific Integrity in AI and
 - `10_data_mgmt/` - Data management plan (Session 10).
 - `11_bias_audit/` - Reproducible fairness exercise and its mitigation comparison (Session 11).
 - `12_integrity/` - Retraction analysis and project AI-use policy (Session 12).
+- `13_presentation/` - Self-contained oral presentation with design-based intervals and interpretation safeguards.
 
 ## Reproduce the Pipeline
 
@@ -27,7 +28,10 @@ See [`05_pipeline/README.md`](05_pipeline/README.md) for the complete workflow. 
 ```powershell
 cd 05_pipeline
 python -m pip install -r requirements.txt
-dvc pull
+python data/download_endes.py
+python data/create_dataset.py
+python data/verify_dataset.py
+python src/survey_analysis.py
 python src/run_experiments.py
 ```
 
@@ -35,7 +39,7 @@ The project uses a de-identified analytical CSV. It is for population-level desc
 
 A public 300-row inspection sample is available at [`05_pipeline/data/endes_anemia_children_2019_2024_sample.csv`](05_pipeline/data/endes_anemia_children_2019_2024_sample.csv). It is provided only to make the dataset structure visible in GitHub; it is not used for analysis, prevalence estimates, or model training.
 
-For the oral presentation, [`05_pipeline/docs/presentation_evidence.md`](05_pipeline/docs/presentation_evidence.md) identifies the topic, data type, primary method, exploratory classification task, algorithm rationale, observed results, and interpretation limits in one place.
+For the oral presentation, [`13_presentation/index.html`](13_presentation/index.html) presents the primary survey findings before the exploratory classifier. [`05_pipeline/docs/presentation_evidence.md`](05_pipeline/docs/presentation_evidence.md) records the topic, data type, primary method, algorithm rationale, observed results, and interpretation limits.
 
 ## Reproduce the Bias Audit
 

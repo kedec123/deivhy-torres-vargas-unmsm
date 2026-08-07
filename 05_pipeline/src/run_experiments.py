@@ -22,8 +22,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "endes_anemia_children_2019_2024.csv"
 RESULTS_PATH = ROOT / "docs" / "experiment_results.csv"
 SUMMARY_PATH = ROOT / "docs" / "experiment_summary.csv"
-MLRUNS_PATH = ROOT / "mlruns"
+MLRUNS_PATH = ROOT / ".mlruns"
 SEEDS = [13, 21, 42, 87, 100]
+TEST_FRACTION = 0.20
 
 
 def file_sha256(path: Path) -> str:
@@ -69,13 +70,13 @@ def main() -> None:
 
     for seed in SEEDS:
         for model_name in ("logistic_regression", "random_forest", "extra_trees"):
-            metrics, _ = evaluate_model(data, model_name, seed)
+            metrics, _ = evaluate_model(data, model_name, seed, test_size=TEST_FRACTION)
             with mlflow.start_run(run_name=f"{model_name}_seed_{seed}"):
                 mlflow.log_params(
                     {
                         "model": model_name,
                         "seed": seed,
-                        "test_size": 0.25,
+                        "test_fraction": TEST_FRACTION,
                         "features": ",".join(FEATURES),
                         "dataset_sha256": dataset_hash,
                         "git_commit": commit,
