@@ -25,7 +25,7 @@
     .accent { color:var(--garnet); } .gold { color:var(--gold); } .lede { max-width:760px; color:var(--ink-soft); font-size:clamp(1rem,1.45vw,1.35rem); line-height:1.48; } .final .lede { color:#d7cfca; }
     .cover-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(220px,.5fr); align-items:end; gap:clamp(2rem,5vw,5rem); } .cover-layout .lede { font-size:clamp(1.05rem,1.55vw,1.5rem); }
     .author { display:flex; gap:.8rem; align-items:center; margin-top:2rem; color:var(--ink-soft); font-size:.92rem; } .author b{color:var(--ink)} .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
-    .qr-card { width:min(100%,250px); justify-self:end; padding:1rem; background:rgba(255,253,249,.88); border:1px solid var(--line); box-shadow:11px 11px 0 rgba(127,23,56,.12); } .qr-card img { width:100%; aspect-ratio:1; padding:.2rem; background:#fff; } .qr-card p { margin:.65rem 0 0; color:var(--ink-soft); font:500 .66rem/1.35 var(--mono); text-align:center; }
+    .qr-card { width:min(100%,250px); justify-self:end; padding:1rem; background:rgba(255,253,249,.88); border:1px solid var(--line); box-shadow:11px 11px 0 rgba(127,23,56,.12); } .qr-card img { width:100%; aspect-ratio:1; padding:.2rem; background:#fff; } .qr-card p,.qr-card a { display:block; margin:.65rem 0 0; color:var(--ink-soft); font:500 .66rem/1.35 var(--mono); text-align:center; overflow-wrap:anywhere; } .qr-card a:hover { color:var(--garnet); }
     .metric-row { display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; margin-top:2rem; max-width:740px; } .metric { border-top:2px solid var(--garnet); padding-top:.55rem; } .metric strong { display:block; color:var(--garnet); font:700 clamp(1.45rem,2.6vw,2.2rem)/1 var(--serif); } .metric span { display:block; margin-top:.35rem; color:var(--ink-soft); font-size:.72rem; line-height:1.25; }
     .footer { display:flex; justify-content:space-between; align-items:center; color:var(--ink-soft); font:500 .63rem/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; } .footer::before { content:''; position:absolute; left:0; right:0; top:-.85rem; height:1px; background:var(--line); } .final .footer { color:#cfc4bd; } .final .footer::before{background:rgba(255,255,255,.2)}
     .layout-2 { display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(1.4rem,4vw,4rem); align-items:stretch; } .layout-2.wide-left {grid-template-columns:1.35fr .65fr}.layout-2.wide-right {grid-template-columns:.7fr 1.3fr}
@@ -58,7 +58,7 @@
           <div class="metric-row" aria-label="Project highlights"><div class="metric"><strong>57,539</strong><span>de-identified child records</span></div><div class="metric"><strong>6</strong><span>comparable survey years</span></div><div class="metric"><strong>18</strong><span>public source archives</span></div></div>
           <div class="author"><b>Deivhy Torres Vargas</b><span class="dot"></span><span>Quantitative repeated cross-sectional study</span></div>
         </div>
-        <div class="qr-card"><img src="assets/repository-qr.svg" alt="QR code linking to the public GitHub repository"><p>Scan to open the public repository</p></div>
+        <div class="qr-card"><img src="assets/repository-qr.svg" alt="QR code linking to the public GitHub repository"><a href="https://github.com/kedec123/deivhy-torres-vargas-unmsm">github.com/kedec123/<wbr>deivhy-torres-vargas-unmsm</a></div>
       </div>
       <footer class="footer"><span>ENDES · primary outcome: legacy HW57</span><span>01 / 09</span></footer>
       <aside class="notes">Open by defining the contribution: a reproducible survey-analysis workflow, not a clinical prediction tool. Invite the audience to scan the QR code only after the title is clear.</aside>
@@ -132,9 +132,9 @@
 
     <section class="slide final" data-title="Close">
       <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>ENDES · reproducible workflow</div>
-      <div class="content final-layout"><div><p class="kicker">Thank you</p><h2>Designed to be <span class="gold">checked, rebuilt and extended.</span></h2><ul class="final-list"><li>Public-source reconstruction, verified with checksums.</li><li>Design-based uncertainty before interpretation.</li><li>Explicit measurement, fieldwork and claim safeguards.</li></ul><p class="repo-url">github.com/kedec123/<wbr>deivhy-torres-vargas-unmsm</p></div><div class="qr-card"><img src="assets/repository-qr.svg" alt="QR code linking to the public GitHub repository"><p>Scan to open the full repository</p></div></div>
+      <div class="content final"><div><p class="kicker">Thank you</p><h2>Designed to be <span class="gold">checked, rebuilt and extended.</span></h2><ul class="final-list"><li>Public-source reconstruction, verified with checksums.</li><li>Design-based uncertainty before interpretation.</li><li>Explicit measurement, fieldwork and claim safeguards.</li></ul><p class="repo-url">github.com/kedec123/<wbr>deivhy-torres-vargas-unmsm</p></div></div>
       <footer class="footer"><span>Questions &amp; discussion</span><span>09 / 09</span></footer>
-      <aside class="notes">Invite questions about method, reproducibility or the survey-design choices. The QR code gives direct access to the final repository.</aside>
+      <aside class="notes">Invite questions about method, reproducibility or the survey-design choices. The repository link appears on the opening slide.</aside>
     </section>
   </main>
   <div class="page-marker" id="pageMarker" aria-label="Current slide number">01 / 09</div>
